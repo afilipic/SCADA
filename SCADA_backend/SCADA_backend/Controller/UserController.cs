@@ -2,41 +2,62 @@ using Microsoft.AspNetCore.Mvc;
 using SCADA_backend.DTO;
 using SCADA_backend.Service;
 
-namespace SCADA_backend.Controller;
+namespace SCADA_backend.Controller
 
-
-[Route("user")]
-[ApiController]
-public class UserController : ControllerBase
 {
-    [HttpPost("login")]
-    public IActionResult Login(LoginDTO login)
+    [ApiController]
+    [Route("user")]
+    public class UserController : ControllerBase
     {
-        try
+
+        private readonly UserService _userService;
+
+        public UserController(UserService userService)
         {
-            UserService.Login(login);
-            return Ok("User successfully logged in!");
+            _userService = userService;
         }
-        catch (ArgumentException ex)
+
+        [HttpGet]
+        public async Task<ActionResult> Get()
         {
-            return BadRequest("Bad request");
+
+            return Ok("It works!");
+
         }
+
+        [HttpPost]
+        [Route("login")]
+
+        public IActionResult Login(LoginDTO login)
+        {
+            try
+            {
+                _userService.Login(login);
+                return Ok("User successfully logged in!");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("Bad request");
+            }
+        }
+
+
+        [HttpPost]
+        [Route("register")]
+
+        public IActionResult Register(LoginDTO user)
+        {
+            try
+            {
+                _userService.Register(user);
+                return Ok("User successfully registered!");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("Bad request");
+            }
+
+        }
+
     }
-    
-    
-    [HttpPost("register")]
-    public IActionResult Register(LoginDTO user)
-    {
-        try
-        {
-            UserService.Register(user);
-            return Ok("User successfully registered!");
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest("Bad request");
-        }
-            
-    }
-    
 }
