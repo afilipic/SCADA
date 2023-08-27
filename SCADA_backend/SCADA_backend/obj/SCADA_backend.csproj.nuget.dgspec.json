@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj": {}
+    "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj": {
+    "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
+        "projectUniqueName": "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
         "projectName": "SCADA_backend",
-        "projectPath": "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
-        "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\obj\\",
+        "projectPath": "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
+        "packagesPath": "C:\\Users\\anita\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\anita\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +39,30 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "MySql.Data.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
