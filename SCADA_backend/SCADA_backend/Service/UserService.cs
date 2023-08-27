@@ -18,7 +18,9 @@ public class UserService
     {
         if (UserRepository.GetByUsername(userInfo.Username) != null)
             throw new ArgumentException("Username already in use!");
-        var user = new User(userInfo.Username, userInfo.Password);
+        Random random = new Random();
+        int id = random.Next(1, 10001);
+        var user = new User(id, userInfo.Username, userInfo.Password);
         UserRepository.Save(user);
     }
 }
