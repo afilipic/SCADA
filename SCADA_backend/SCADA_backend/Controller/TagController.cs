@@ -7,15 +7,22 @@ namespace SCADA_backend.Controller;
 
 [Route("tags")]
 [ApiController]
-[EnableCors]
+// [EnableCors]
 public class TagController : ControllerBase
 {
+    
+    private readonly TagService _tagService;
+
+    public TagController(TagService tagService)
+    {
+        _tagService = tagService;
+    }
     
     [HttpGet]
     [Route("DO")]
     public IActionResult GetAllDO()
     {
-        return Ok(TagService.GetAllDO());
+        return Ok(_tagService.GetAllDO());
     }
 
     
@@ -25,7 +32,7 @@ public class TagController : ControllerBase
     {
         try
         {
-            TagService.AddDO(tagInfo);
+            _tagService.AddDO(tagInfo);
             return Ok("Digital output tag successfully added!");
         }
         catch (ArgumentException ex)
@@ -41,7 +48,7 @@ public class TagController : ControllerBase
     {
         try
         {
-            TagService.EditDO(id, value);
+            _tagService.EditDO(id, value);
             return Ok("Output tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -56,7 +63,7 @@ public class TagController : ControllerBase
     {
         try
         {
-            TagService.DeleteDO(id);
+            _tagService.DeleteDO(id);
             return Ok("Tag successfully deleted!");
         }
         catch (ArgumentException ex)

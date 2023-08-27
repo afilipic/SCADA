@@ -6,13 +6,13 @@ namespace SCADA_backend.Service;
 
 public class TagService
 {
-    public static List<DigitalOutput> GetAllDO()
+    public  List<DigitalOutput> GetAllDO()
     {
         return TagRepository.GetAllDO();
        
     }
     
-    public static void AddDO(DigitalOutput tagInfo)
+    public  void AddDO(DigitalOutput tagInfo)
     {
         if (TagRepository.GetTagById(tagInfo.Id) != null)
             throw new ArgumentException("TagName already in use!");
@@ -22,7 +22,7 @@ public class TagService
         TagRepository.SaveDO(tagInfo);
     }
     
-    public static void EditDO(string id,double value)
+    public  void EditDO(string id,double value)
     {
         var tag = TagRepository.GetTagById(id);
         if (tag == null)
@@ -33,7 +33,7 @@ public class TagService
         TagRepository.ChangeDO(digitalTag);
         
     }
-    public static void DeleteDO(string id)
+    public  void DeleteDO(string id)
     {
         Tag tag = TagRepository.GetTagById(id);
         if (tag == null)
