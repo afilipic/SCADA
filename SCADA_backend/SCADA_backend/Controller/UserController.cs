@@ -14,7 +14,7 @@ namespace SCADA_backend.Controller
         public async Task<ActionResult> Get()
         {
 
-            return Ok();
+            return Ok("It works!");
 
         }
 
