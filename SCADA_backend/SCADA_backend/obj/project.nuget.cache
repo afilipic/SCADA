@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WOPiAPst9GIM+EliHV5UPiimPOO99FkzQks3pmsDFdvxjJexRNUF1SUfmFOCOqnpQeYytt7rdXEHLKmD7RDi6w==",
+  "dgSpecHash": "p9w/G38pvCynDK8cdwnTg65rzZnF+NKuXLEFzNEekdpcfs9ZfB9JHc/2G9gDJrkjgAx/BtzLzFbNHWtiZBDuag==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
+  "projectFilePath": "/Users/tamaradzambic/Desktop/SCADA/SCADA_backend/SCADA_backend/SCADA_backend.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
