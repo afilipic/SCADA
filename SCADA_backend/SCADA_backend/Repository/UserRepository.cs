@@ -4,13 +4,22 @@ namespace SCADA_backend.Repository;
 
 public class UserRepository
 {
-    public static void Save(User user)
-    {
+    private readonly AppDbContext _dbContext;
 
+    public UserRepository(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
     }
 
-    public static User? GetByUsername(string username)
+    public void Save(User user)
     {
-        return null;
+        _dbContext.Users.Add(user);
+        _dbContext.SaveChanges();
     }
+
+    public User? GetByUsername(string username)
+    {
+        return _dbContext.Users.FirstOrDefault(u => u.Username == username);
+    }
+
 }

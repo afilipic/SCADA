@@ -2,41 +2,55 @@ using Microsoft.AspNetCore.Mvc;
 using SCADA_backend.DTO;
 using SCADA_backend.Service;
 
-namespace SCADA_backend.Controller;
+namespace SCADA_backend.Controller
 
-
-[Route("user")]
-[ApiController]
-public class UserController : ControllerBase
 {
-    [HttpPost("login")]
-    public IActionResult Login(LoginDTO login)
+    [ApiController]
+    [Route("user")]
+    public class UserController : ControllerBase
     {
-        try
+
+        [HttpGet]
+        public async Task<ActionResult> Get()
         {
-            UserService.Login(login);
-            return Ok("User successfully logged in!");
+
+            return Ok();
+
         }
-        catch (ArgumentException ex)
+
+        [HttpPost]
+        [Route("login")]
+
+        public IActionResult Login(LoginDTO login)
         {
-            return BadRequest("Bad request");
+            try
+            {
+                UserService.Login(login);
+                return Ok("User successfully logged in!");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("Bad request");
+            }
         }
+
+
+        [HttpPost]
+        [Route("register")]
+
+        public IActionResult Register(LoginDTO user)
+        {
+            try
+            {
+                UserService.Register(user);
+                return Ok("User successfully registered!");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("Bad request");
+            }
+
+        }
+
     }
-    
-    
-    [HttpPost("register")]
-    public IActionResult Register(LoginDTO user)
-    {
-        try
-        {
-            UserService.Register(user);
-            return Ok("User successfully registered!");
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest("Bad request");
-        }
-            
-    }
-    
 }

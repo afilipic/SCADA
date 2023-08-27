@@ -6,6 +6,12 @@ namespace SCADA_backend.Service;
 
 public class UserService
 {
+    public static UserRepository UserRepository;
+
+    public UserService(UserRepository userRepository)
+    {
+        UserRepository = userRepository;
+    }
     public static void Login(LoginDTO login)
     {
         var user = UserRepository.GetByUsername(login.Username) ?? throw new ArgumentException("Username or password do not match!");
