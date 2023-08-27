@@ -6646,19 +6646,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\anita\\.nuget\\packages\\": {}
+    "C:\\Users\\Asus\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
+      "projectUniqueName": "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
       "projectName": "SCADA_backend",
-      "projectPath": "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
-      "packagesPath": "C:\\Users\\anita\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\anita\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\obj\\",
+      "projectPath": "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\SCADA_backend.csproj",
+      "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Asus\\OneDrive\\Desktop\\SCADA\\SCADA_backend\\SCADA_backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\anita\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6736,7 +6736,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
