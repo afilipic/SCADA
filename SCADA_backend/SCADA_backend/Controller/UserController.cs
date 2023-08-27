@@ -10,6 +10,13 @@ namespace SCADA_backend.Controller
     public class UserController : ControllerBase
     {
 
+        private readonly UserService _userService;
+
+        public UserController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -25,7 +32,7 @@ namespace SCADA_backend.Controller
         {
             try
             {
-                UserService.Login(login);
+                _userService.Login(login);
                 return Ok("User successfully logged in!");
             }
             catch (ArgumentException ex)
@@ -42,7 +49,7 @@ namespace SCADA_backend.Controller
         {
             try
             {
-                UserService.Register(user);
+                _userService.Register(user);
                 return Ok("User successfully registered!");
             }
             catch (ArgumentException ex)

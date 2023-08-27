@@ -12,7 +12,7 @@ public class UserService
     {
         UserRepository = userRepository;
     }
-    public static void Login(LoginDTO login)
+    public  void Login(LoginDTO login)
     {
         var user = UserRepository.GetByUsername(login.Username) ?? throw new ArgumentException("Username or password do not match!");
         if (user.Password != login.Password)
@@ -20,7 +20,7 @@ public class UserService
         // UserRepository.Login(user);
     }
     
-    public static void Register(LoginDTO userInfo)
+    public void Register(LoginDTO userInfo)
     {
         if (UserRepository.GetByUsername(userInfo.Username) != null)
             throw new ArgumentException("Username already in use!");
