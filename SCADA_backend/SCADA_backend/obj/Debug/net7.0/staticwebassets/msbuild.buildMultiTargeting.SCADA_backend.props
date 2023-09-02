@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\SCADA_backend.props" />
+</Project>

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "eDEHAiHt9BSek2m4W8h81RPO5TKCQ4Yi6wu8+umMhmQ=",
+  "Source": "SCADA_backend",
+  "BasePath": "_content/SCADA_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
