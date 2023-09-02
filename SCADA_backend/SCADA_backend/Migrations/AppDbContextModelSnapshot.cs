@@ -125,11 +125,11 @@ namespace SCADA_backend.Migrations
                 {
                     b.HasBaseType("SCADA_backend.Model.Tag");
 
-                    b.Property<bool>("InitialValue")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<double>("InitialValue")
+                        .HasColumnType("double");
 
-                    b.Property<bool>("Value")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<double>("Value")
+                        .HasColumnType("double");
 
                     b.ToTable("DigitalOutputs", (string)null);
                 });

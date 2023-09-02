@@ -10,7 +10,7 @@ using SCADA_backend;
 namespace SCADA_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230827200507_SecTPTMigration")]
+    [Migration("20230902150447_SecTPTMigration")]
     partial class SecTPTMigration
     {
         /// <inheritdoc />
@@ -128,11 +128,11 @@ namespace SCADA_backend.Migrations
                 {
                     b.HasBaseType("SCADA_backend.Model.Tag");
 
-                    b.Property<bool>("InitialValue")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<double>("InitialValue")
+                        .HasColumnType("double");
 
-                    b.Property<bool>("Value")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<double>("Value")
+                        .HasColumnType("double");
 
                     b.ToTable("DigitalOutputs", (string)null);
                 });
