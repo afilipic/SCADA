@@ -49,6 +49,30 @@ public class TagRepository
         dbContext.Entry(tag).Property(x => x.Value).IsModified = true;
         dbContext.SaveChanges();
     }
+       
+    // DIGITAL INPUT
+    
+    public static List<DigitalInput> GetAllDI()
+    {
+        List<DigitalInput> digitalInputs = new();
+        AppDbContext dbContext = new AppDbContext();
+        digitalInputs.AddRange(dbContext.DigitalInputs);
+        return digitalInputs;
+    }
+    
+    public static void SaveDI(DigitalInput digitalInput)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.DigitalInputs.Add(digitalInput);
+        dbContext.SaveChanges();
+    }
+    public static void ChangeDI(DigitalInput tag)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.DigitalInputs.Attach(tag);
+        dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
+        dbContext.SaveChanges();
+    }
     
     // ANALOG OUTPUT
     
@@ -95,28 +119,5 @@ public class TagRepository
         dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
         dbContext.SaveChanges();
     }
-    public static List<DigitalInput> GetAllDI()
-    {
-        List<DigitalInput> digitalInputs = new();
-        AppDbContext dbContext = new AppDbContext();
-        digitalInputs.AddRange(dbContext.DigitalInputs);
-        return digitalInputs;
-    }
     
-    public static void SaveDI(DigitalInput digitalInput)
-    {
-        AppDbContext dbContext = new AppDbContext();
-        dbContext.DigitalInputs.Add(digitalInput);
-        dbContext.SaveChanges();
-    }
-    public static void ChangeDI(DigitalInput tag)
-    {
-        AppDbContext dbContext = new AppDbContext();
-        dbContext.DigitalInputs.Attach(tag);
-        dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
-        dbContext.SaveChanges();
-    }
-    
-
-
 }
