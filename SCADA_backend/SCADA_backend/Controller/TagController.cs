@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using SCADA_backend.DTO;
 using SCADA_backend.Model;
 using SCADA_backend.Service;
 
@@ -46,11 +47,11 @@ public class TagController : ControllerBase
     
     [HttpPut]
     [Route("DO/{id}")]
-    public IActionResult EditDO(string id, [FromBody] double value)
+    public IActionResult EditDO(string id, [FromBody] DOeditDTO tag)
     {
         try
         {
-            _tagService.EditDO(id, value);
+            _tagService.EditDO(id, tag.Value);
             return Ok("Output tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -82,6 +83,13 @@ public class TagController : ControllerBase
     {
         return Ok(_tagService.GetAllAO());
     }
+    
+    [HttpGet]
+    [Route("DI")]
+    public IActionResult GetAllDI()
+    {
+        return Ok(_tagService.GetAllDI());
+    }
 
     
     [HttpPost]
@@ -98,6 +106,21 @@ public class TagController : ControllerBase
             return BadRequest("Bad request!");
         }
     }
+    
+    [HttpPost]
+    [Route("DI")]
+    public IActionResult AddDI(DigitalInput tagInfo)
+    {
+        try
+        {
+            _tagService.AddDI(tagInfo);
+            return Ok("Digital output tag successfully added!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
 
     
     [HttpPut]
@@ -107,7 +130,22 @@ public class TagController : ControllerBase
         try
         {
             _tagService.EditAO(id, value);
-            return Ok("Analog output tag value successfully changed!");
+            return Ok("Analog output tag value successfully changed!");  
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest( "Bad request!");
+        }
+    }
+    
+    [HttpPut]
+    [Route("DI/{id}")]
+    public IActionResult EditDI(string id)
+    {
+        try
+        {
+            _tagService.EditDI(id);
+            return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
         {
@@ -122,6 +160,20 @@ public class TagController : ControllerBase
         try
         {
             _tagService.DeleteAO(id);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
+    
+    [HttpDelete]
+    [Route("DI/{id}")]
+    public IActionResult DeleteDI(string id)
+    {
+        try
+        {
+            _tagService.DeleteDI(id);
             return Ok("Tag successfully deleted!");
         }
         catch (ArgumentException ex)

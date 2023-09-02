@@ -25,14 +25,14 @@ public class TagService
         TagRepository.SaveDO(tagInfo);
     }
     
-    public  void EditDO(string id,double value)
+    public  void EditDO(string id, double value)
     {
         var tag = TagRepository.GetTagById(id);
         if (tag == null)
             throw new ArgumentException("Tag with the specified name does not exist!");
         
         DigitalOutput digitalTag = (DigitalOutput)tag;
-        digitalTag.Value = value == 0 ? false : true;
+        digitalTag.Value = value > 0.5 ? 1 : 0;
         TagRepository.ChangeDO(digitalTag);
         
     }
