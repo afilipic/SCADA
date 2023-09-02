@@ -18,6 +18,8 @@ public class TagController : ControllerBase
         _tagService = tagService;
     }
     
+    // DIGITAL OUTPUT
+    
     [HttpGet]
     [Route("DO")]
     public IActionResult GetAllDO()
@@ -72,4 +74,115 @@ public class TagController : ControllerBase
         }
     }
     
+    // ANALOG OUTPUT
+    
+    [HttpGet]
+    [Route("AO")]
+    public IActionResult GetAllAO()
+    {
+        return Ok(_tagService.GetAllAO());
+    }
+
+    
+    [HttpPost]
+    [Route("AO")]
+    public IActionResult AddAO(AnalogOutput tagInfo)
+    {
+        try
+        {
+            _tagService.AddAO(tagInfo);
+            return Ok("Analog output tag successfully added!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
+
+    
+    [HttpPut]
+    [Route("AO/{id}")]
+    public IActionResult EditAO(string id, [FromBody] double value)
+    {
+        try
+        {
+            _tagService.EditAO(id, value);
+            return Ok("Analog output tag value successfully changed!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest( "Bad request!");
+        }
+    }
+    
+    [HttpDelete]
+    [Route("AO/{id}")]
+    public IActionResult DeleteAO(string id)
+    {
+        try
+        {
+            _tagService.DeleteAO(id);
+            return Ok("Tag successfully deleted!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
+    
+    // ANALOG INPUT
+    
+    [HttpGet]
+    [Route("AI")]
+    public IActionResult GetAllAI()
+    {
+        return Ok(_tagService.GetAllAI());
+    }
+
+    
+    [HttpPost]
+    [Route("AI")]
+    public IActionResult AddAI(AnalogInput tagInfo)
+    {
+        try
+        {
+            _tagService.AddAI(tagInfo);
+            return Ok("Analog input tag successfully added!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
+
+    
+    [HttpPut]
+    [Route("AI/{id}")]
+    public IActionResult EditAO(string id)
+    {
+        try
+        {
+            _tagService.EditAI(id);
+            return Ok("Analog input tag value successfully changed!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest( "Bad request!");
+        }
+    }
+    
+    [HttpDelete]
+    [Route("AI/{id}")]
+    public IActionResult DeleteAI(string id)
+    {
+        try
+        {
+            _tagService.DeleteAI(id);
+            return Ok("Tag successfully deleted!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
 }
