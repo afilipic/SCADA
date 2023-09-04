@@ -99,13 +99,28 @@ public class TagController : ControllerBase
         }
     }
     
+    
     [HttpPut]
     [Route("DI/{id}")]
-    public IActionResult EditDI(string id)
+    public IActionResult EditDI(string id, [FromBody] DIeditDTO tag)
     {
         try
         {
-            _tagService.EditDI(id);
+            _tagService.EditDI(id, tag.Value);
+            return Ok("Input tag value successfully changed!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
+    [HttpPut]
+    [Route("DI/switch/{id}")]
+    public IActionResult SwitchDI(string id)
+    {
+        try
+        {
+            _tagService.SwitchDI(id);
             return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -214,16 +229,30 @@ public class TagController : ControllerBase
     
     [HttpPut]
     [Route("AI/{id}")]
-    public IActionResult EditAO(string id)
+    public IActionResult EditAI(string id, [FromBody] AnalogInput tag)
     {
         try
         {
-            _tagService.EditAI(id);
-            return Ok("Analog input tag value successfully changed!");
+            _tagService.EditAI(id, tag.Value);
+            return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
         {
-            return BadRequest( "Bad request!");
+            return BadRequest("Bad request!");
+        }
+    }
+    [HttpPut]
+    [Route("AI/switch/{id}")]
+    public IActionResult SwitchAI(string id)
+    {
+        try
+        {
+            _tagService.SwitchAI(id);
+            return Ok("Input tag value successfully changed!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
         }
     }
     

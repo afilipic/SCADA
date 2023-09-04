@@ -9,9 +9,13 @@ public class AnalogInput : Tag
     public int ScanTime { get; set; }
     public bool isScanning { get; set; }
     
+    public ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
+
+    public double Value { get; set; }
+
     public AnalogInput() {}
 
-    public AnalogInput(string id, string description, int address, double lowLimit, double highLimit, string units, DriverType driver, int scanTime, bool isScanning)
+    public AnalogInput(string id, string description, int address, double lowLimit, double highLimit, string units, DriverType driver, int scanTime, bool isScanning, double value)
     {
         Id = id;
         Description = description;
@@ -22,5 +26,8 @@ public class AnalogInput : Tag
         Driver = driver;
         ScanTime = scanTime;
         this.isScanning = isScanning;
+        Value = value;
+        Alarms = new List<Alarm>();
+
     }
 }

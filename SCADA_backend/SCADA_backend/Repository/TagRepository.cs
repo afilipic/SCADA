@@ -70,6 +70,13 @@ public class TagRepository
     {
         AppDbContext dbContext = new AppDbContext();
         dbContext.DigitalInputs.Attach(tag);
+        dbContext.Entry(tag).Property(x => x.Value).IsModified = true;
+        dbContext.SaveChanges();
+    }
+    public static void SwitchDI(DigitalInput tag)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.DigitalInputs.Attach(tag);
         dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
         dbContext.SaveChanges();
     }
@@ -116,8 +123,21 @@ public class TagRepository
     {
         AppDbContext dbContext = new AppDbContext();
         dbContext.AnalogInputs.Attach(tag);
+        dbContext.Entry(tag).Property(x => x.Value).IsModified = true;
+        dbContext.SaveChanges();
+    }
+    public static void SwitchAI(AnalogInput tag)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.AnalogInputs.Attach(tag);
         dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
         dbContext.SaveChanges();
     }
-    
+    public static void AddAlarmAI(AnalogInput tag)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.AnalogInputs.Attach(tag);
+        dbContext.Entry(tag).Property(x => x.Alarms).IsModified = true;
+        dbContext.SaveChanges();
+    }
 }
