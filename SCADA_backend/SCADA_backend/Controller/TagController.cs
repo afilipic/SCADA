@@ -84,11 +84,27 @@ public class TagController : ControllerBase
     
     // DIGITAL INPUT
     
+    
     [HttpGet]
     [Route("DI")]
     public IActionResult GetAllDI()
     {
         return Ok(_tagService.GetAllDI());
+    }
+    
+    [HttpPost]
+    [Route("DI/{id}/{value}")]
+    public IActionResult ValueDIFromRTU(string id, double value)
+    {
+        try
+        {
+            _tagService.EditDI(id, value);
+            return Ok("Successfully updated digital input value!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
     }
     
     [HttpPost]
@@ -215,6 +231,21 @@ public class TagController : ControllerBase
     public IActionResult GetAllAIIds()
     {
         return Ok(_tagService.GetAllAnalogInputIds());
+    }
+    
+    [HttpPost]
+    [Route("AI/{id}/{value}")]
+    public IActionResult ValueAIFromRTU(string id, double value)
+    {
+        try
+        {
+            _tagService.EditAI(id, value);
+            return Ok("Successfully updated analog input value!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
     }
     
     [HttpGet]

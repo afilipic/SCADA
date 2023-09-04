@@ -12,8 +12,6 @@ public class AnalogInput : Tag
     
     public ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 
-    public double Value { get; set; }
-
     public AnalogInput() {}
 
     public AnalogInput(string id, string description, int address, double lowLimit, double highLimit, string units, DriverType driver, int scanTime, bool isScanning, double value)
