@@ -1,16 +1,71 @@
 <body>
+    <div #confirmationModal class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to delete?</p>
+            <div class="modal-buttons">
+                <button class="modal-button" (click)="confirmDelete()">Yes</button>
+                <button class="modal-button" id="cancel" (click)="cancelAction()">No</button>
+            </div>
+        </div>
+    </div>
+    <div #editModal class="modal-edit">
+        <div class="modal-content-edit">
+            <h2 class="editFormTitle">Add Tag</h2>
+            <div class="input-row">
+                <div class="input-pair">
+                    <label for="lowLimit">Low limit:</label>
+                    <input type="text" id="lowLimit" [(ngModel)]="lowLimit">
+                </div>
+                
+                <div class="input-pair">
+                    <label for="highLimit"></label>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <label for="value">Value:</label>
+            <input type="text" id="value" [(ngModel)]="value">
+            
+            <div class="input-row">
+                <div class="input-pair">
+                    <label for="lowLimit">Low limit:</label>
+                    <input type="text" id="lowLimit" [(ngModel)]="lowLimit">
+                </div>
+                
+                <div class="input-pair">
+                    <label for="highLimit">High limit:</label>
+                    <input type="text" id="highLimit" [(ngModel)]="highLimit">
+                </div>
+            </div>
+        
+            
+            <div class="modal-buttons-edit">
+                <button class="modal-button-edit" (click)="edit()">Edit</button>
+                <button class="modal-button-edit" id="cancel" (click)="hideEditForm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
     <div id="menu">
         <!-- Menu Content Goes Here -->
         <h2 class="titleS">SCADA Sys</h2>
         <div id="buttons">
-           
-            <button class="menu-button  active">
-                
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'trending'}" (click)="showContext('trending')">
                 <span class="button-icon">
-                    <i class="fas   fa-clipboard ic"></i>
+                    <i class="fas fa-clipboard ic"></i>
                 </span>
                 <span class="button-text">Trending</span>
             </button>
+            
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'dbManager'}" (click)="showContext('dbManager')">
+                <span class="button-icon">
+                    <i class="fas fa-clipboard ic"></i>
+                </span>
+                <span class="button-text">DB Manager</span>
+            </button>
+            
             <button class="menu-button">
                 <span class="button-icon">
                     <i class="fas fa-file-alt ic"></i>
@@ -34,10 +89,14 @@
 
     <div id="main">
         <div class="mainm">
-            <div id="title">Tags</div>
+            <div class="title-container">
+                <div id="title">{{ title }}</div>
+                <button class="circle-btn" (click)="showCreateForm()">+</button>
+            </div>
+            
             <div id="separator"></div>
             <!-- Main Section Content Goes Here -->
-            <div class="context">
+            <div class="context" *ngIf="activeContext === 'trending'">
                 <div class="left-column">
                     <div class="albums">
                         <div class="card card-with-shadow" style="width: 250px;">
@@ -48,16 +107,61 @@
                                     <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
                                     <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
                                 </div>
+                                
                                 <div class="card-actions">
-                                    <button class="action-btn"><i class="fas fa-trash"></i></button>
-                                    <button class="action-btn"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
                                     <button class="action-btn"><i class="fas fa-bell"></i></button>
                                 </div>
+                                
                                 <!-- The toggle switch is now outside of the card-actions div -->
                                 <label class="toggle-switch">
                                     <input type="checkbox">
                                     <span class="slider"></span>
                                 </label>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                </div>
+                <div class="right-column">
+
+                </div>
+            </div>
+
+
+            <div class="context" *ngIf="activeContext === 'dbManager'">
+                <div class="left-column">
+                    <div class="albums">
+                        <div class="card card-with-shadow" style="width: 250px;">
+                            <div class="content-card">
+                                <div class="card-header">
+                                    
+                                    <h4 class="card-title">Value</h4>
+                                    <div *ngIf="editing" class="edit-container">
+                                        <div class="input-row-e">
+                                            <div class="input-pair">
+                                                <input type="text" [(ngModel)]="cardNumber" class="card-number-input">
+                                            </div>
+                                            
+                                            <div class="input-pair">
+                                                <button class="circle-btn" (click)="saveValue()">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Show the card number text if editing is false -->
+                                    <h2 *ngIf="!editing" class="card-number">{{ cardNumber }}</h2>
+                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
+                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                </div>
+                                
+                                <div class="card-actions">
+                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" (click)="toggleEdit()"><i class="fas fa-pen"></i></button>
+                                    
+                                </div>
                             </div>
                         </div>
                         
