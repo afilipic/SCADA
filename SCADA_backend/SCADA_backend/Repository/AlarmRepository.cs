@@ -15,7 +15,7 @@ public class AlarmRepository
     public static Alarm? GetByTagId(string id)
     {
         AppDbContext dbContext = new AppDbContext();
-        return dbContext.Alarms.Any(alarm => alarm.AITagId == id) ? dbContext.Alarms.FirstOrDefault(tag => tag.AITagId == id) : null;
+        return dbContext.Alarms.Any(alarm => alarm.AnalogInputId == id) ? dbContext.Alarms.FirstOrDefault(tag => tag.AnalogInputId == id) : null;
        
     }
     public static List<Alarm> GetAll()

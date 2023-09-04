@@ -11,27 +11,32 @@ public class AlarmService
         return AlarmRepository.GetAll();
     }
     
-    public  void Add(AlarmDTO alarm)
+    public  void AddAlarm(AnalogInput tag)
     {
-        Alarm newAlarm = new Alarm();
+        Alarm alarm = new Alarm();
         Random rand = new Random();
-        newAlarm.Id = rand.Next(10000);
+        alarm.Id = rand.Next(10000);
         
-        newAlarm.AITagId = alarm.AITagId;
-        newAlarm.Priority = alarm.Priority;
-        newAlarm.Unit = alarm.Unit;
+        alarm.AnalogInputId = tag.Id;
+        alarm.Priority = 2;  //rand od 1 do 3
+        alarm.Unit = tag.Units;
         
-        newAlarm.Type = null;
-        newAlarm.Limit = null;
-        newAlarm.Value = null;
+        alarm.Value = tag.Value;
+        alarm.Limit = tag.Value > tag.HighLimit ? tag.HighLimit : tag.LowLimit;
+        alarm.Type = tag.Value > tag.HighLimit ? AlarmType.HIGH : AlarmType.LOW;
+        alarm.TimeStamp = DateTime.Now;
+        alarm.isDeleted = false;
         
-        newAlarm.isDeleted = false;
+
+        AlarmRepository.Save(alarm);
+        //upisi u AlarmLog.txt
         
-        AnalogInput tag = (AnalogInput)TagRepository.GetTagById(alarm.AITagId);
-        tag.Alarms.Add(newAlarm);
-        TagRepository.AddAlarmAI(tag);
         
-        AlarmRepository.Save(newAlarm);
+        for (int i = 0; i < alarm.Priority; i++)
+        {
+            //posalji na front notifikaciju 
+        }
+
     }
     
     public  void Delete(int id)
@@ -42,28 +47,5 @@ public class AlarmService
         alarm.isDeleted = true;
         AlarmRepository.Delete(alarm);
     }
-
-    public void Trigger(string tagId, double value, double limit)
-    {
-        Alarm alarm = AlarmRepository.GetByTagId(tagId);
-        
-        if (alarm == null)
-            throw new ArgumentException("Tag with the specified id does not exist!");
-
-        alarm.Value = value;
-        alarm.Limit = limit;
-        alarm.Type = value > limit ? AlarmType.HIGH : AlarmType.LOW;
-        
-        AlarmLog log = new AlarmLog(alarm);
-        
-        // sacuvaj  u AlarmLog.txt i u bazu
-
-        for (int i = 0; i < alarm.Priority; i++)
-        {
-            //posalji na front notifikaciju 
-        }
-        
-        
-
-    }
+    
 }

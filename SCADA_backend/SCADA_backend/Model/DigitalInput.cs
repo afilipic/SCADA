@@ -5,7 +5,6 @@ public class DigitalInput : Tag
     public DriverType Driver { get; set; }
     public double ScanTime { get; set; }
     public bool isScanning { get; set; }
-    
     public double Value { get; set; }
 
     public DigitalInput() {}
@@ -19,6 +18,5 @@ public class DigitalInput : Tag
         ScanTime = scanTime;
         this.isScanning = isScanning;
         Value = value;
-
     }
 }

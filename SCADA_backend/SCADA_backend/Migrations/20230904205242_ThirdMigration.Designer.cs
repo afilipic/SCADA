@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCADA_backend;
 
@@ -10,9 +11,11 @@ using SCADA_backend;
 namespace SCADA_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230904205242_ThirdMigration")]
+    partial class ThirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,8 +28,11 @@ namespace SCADA_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("AnalogInputId")
+                    b.Property<string>("AITagId")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AnalogInputId")
                         .HasColumnType("varchar(255)");
 
                     b.Property<double?>("Limit")
@@ -34,9 +40,6 @@ namespace SCADA_backend.Migrations
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("TimeStamp")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("Type")
                         .HasColumnType("int");
@@ -184,9 +187,7 @@ namespace SCADA_backend.Migrations
                 {
                     b.HasOne("SCADA_backend.Model.AnalogInput", null)
                         .WithMany("Alarms")
-                        .HasForeignKey("AnalogInputId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AnalogInputId");
                 });
 
             modelBuilder.Entity("SCADA_backend.Model.AnalogInput", b =>

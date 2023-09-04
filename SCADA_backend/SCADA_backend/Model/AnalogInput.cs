@@ -8,10 +8,9 @@ public class AnalogInput : Tag
     public DriverType Driver { get; set; }
     public int ScanTime { get; set; }
     public bool isScanning { get; set; }
+    public double Value { get; set; }
     
     public ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
-
-    public double Value { get; set; }
 
     public AnalogInput() {}
 
@@ -29,5 +28,10 @@ public class AnalogInput : Tag
         Value = value;
         Alarms = new List<Alarm>();
 
+    }
+
+    public void AddAlarm(Alarm alarm)
+    {
+        Alarms.Add(alarm);
     }
 }

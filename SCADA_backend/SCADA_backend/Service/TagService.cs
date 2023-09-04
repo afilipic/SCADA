@@ -7,8 +7,9 @@ namespace SCADA_backend.Service;
 public class TagService
 {
     private AlarmService _alarmService = new AlarmService();
-    // DIGITAL OUTPUT
     
+    // DIGITAL OUTPUT
+
     public  List<DigitalOutput> GetAllDO()
     {
         return TagRepository.GetAllDO();
@@ -51,6 +52,11 @@ public class TagService
     
     // DIGITAL INPUT
     
+    public List<String> GetAllDigitalInputIds()
+    {
+        return TagRepository.GetAllDigitalInputIds();
+    }
+    
     public  void AddDI(DigitalInput tagInfo)
     {
         if (TagRepository.GetTagById(tagInfo.Id) != null)
@@ -65,6 +71,7 @@ public class TagService
         var tag = TagRepository.GetTagById(id);
         if (tag == null)
             throw new ArgumentException("Tag with the specified name does not exist!");
+        
         
         DigitalInput digitalTag = (DigitalInput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
@@ -92,6 +99,11 @@ public class TagService
     }
     
     // ANALOG OUTPUT
+
+    public List<String> GetAllAnalogInputIds()
+    {
+        return TagRepository.GetAllAnalogInputIds();
+    }
     
     public  List<AnalogOutput> GetAllAO()
     {
@@ -157,13 +169,7 @@ public class TagService
         
         if(value > analogTag.HighLimit || value < analogTag.LowLimit)
         {
-            var alarm = AlarmRepository.GetByTagId(id);
-            if (alarm != null)
-            {
-                var limit = value > analogTag.HighLimit ? analogTag.HighLimit : analogTag.LowLimit;
-                _alarmService.Trigger(id, analogTag.Value, limit);
-            }
-                
+            _alarmService.AddAlarm(analogTag);
         }
 
     }

@@ -4,8 +4,8 @@ namespace SCADA_backend.Repository;
 
 public class TagRepository
 {
-    
-    // DIGITAL OUPUT
+
+    // DIGITAL OUTPUT
     
     public static Tag? GetTagById(string id)
     {
@@ -52,6 +52,21 @@ public class TagRepository
        
     // DIGITAL INPUT
     
+    public static List<String> GetAllDigitalInputIds()
+    {
+        List<String> ids = new List<string>();
+        List<DigitalInput> digitalOutputs = new();
+        AppDbContext dbContext = new AppDbContext();
+        digitalOutputs.AddRange(dbContext.DigitalInputs);
+        
+        foreach (DigitalInput output in digitalOutputs)
+        {
+            ids.Add(output.Id);
+        }
+
+        return ids;
+    }
+    
     public static List<DigitalInput> GetAllDI()
     {
         List<DigitalInput> digitalInputs = new();
@@ -82,7 +97,7 @@ public class TagRepository
     }
     
     // ANALOG OUTPUT
-    
+
     public static List<AnalogOutput> GetAllAO()
     {
         List<AnalogOutput> analogOutputs = new();
@@ -105,6 +120,21 @@ public class TagRepository
     }
     
     // ANALOG INPUT
+    
+    public static List<String> GetAllAnalogInputIds()
+    {
+        List<String> ids = new List<string>();
+        List<AnalogInput> analogOutputs = new();
+        AppDbContext dbContext = new AppDbContext();
+        analogOutputs.AddRange(dbContext.AnalogInputs);
+        
+        foreach (AnalogInput output in analogOutputs)
+        {
+            ids.Add(output.Id);
+        }
+
+        return ids;
+    }
     
     public static List<AnalogInput> GetAllAI()
     {
