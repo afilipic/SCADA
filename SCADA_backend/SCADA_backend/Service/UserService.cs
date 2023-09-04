@@ -17,7 +17,6 @@ public class UserService
         var user = UserRepository.GetByUsername(login.Username) ?? throw new ArgumentException("Username or password do not match!");
         if (user.Password != login.Password)
             throw new ArgumentException("Username or password do not match!");
-        // UserRepository.Login(user);
     }
     
     public void Register(LoginDTO userInfo)
