@@ -8,6 +8,10 @@ public class TagService
 {
     
     // DIGITAL OUTPUT
+    public List<String> GetAllDigitalOutputIds()
+    {
+        return TagRepository.GetAllDigitalInputIds();
+    }
     
     public  List<DigitalOutput> GetAllDO()
     {
@@ -80,6 +84,11 @@ public class TagService
     }
     
     // ANALOG OUTPUT
+
+    public List<String> GetAllAnalogInputIds()
+    {
+        return TagRepository.GetAllAnalogInputIds();
+    }
     
     public  List<AnalogOutput> GetAllAO()
     {

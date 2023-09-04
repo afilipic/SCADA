@@ -22,6 +22,13 @@ public class TagController : ControllerBase
     // DIGITAL OUTPUT
 
     [HttpGet]
+    [Route("DO/ids")]
+    public IActionResult GetAllDOIds()
+    {
+        return Ok(_tagService.GetAllDigitalOutputIds());
+    }
+    
+    [HttpGet]
     [Route("DO")]
     public IActionResult GetAllDO()
     {
@@ -187,6 +194,13 @@ public class TagController : ControllerBase
 
 
     // ANALOG INPUT
+    
+    [HttpGet]
+    [Route("AI/ids")]
+    public IActionResult GetAllAIIds()
+    {
+        return Ok(_tagService.GetAllAnalogInputIds());
+    }
     
     [HttpGet]
     [Route("AI")]

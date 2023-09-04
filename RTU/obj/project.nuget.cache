@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zdqLjRsMou5ggjHbcoNh6O4NeYI6N4+MeFFog3dUOQqt8ygM7o/bIzUO0U16FJ1ZSCLPHRbQ/2vEE/jJY/UIvw==",
+  "dgSpecHash": "IoJ0wL1BDZ/32XQTGLMbhdKCAJ8N4OjyYk3ccMK2yvevdn8lNNEM/BmKVACbvgRlDFuu8/zRUSZza1i6u6oWXw==",
   "success": true,
   "projectFilePath": "C:\\Users\\anita\\Desktop\\SCADA\\RTU\\RTU.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\anita\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\anita\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.15\\microsoft.netcore.app.host.win-x64.5.0.15.nupkg.sha512"
   ],
   "logs": []
