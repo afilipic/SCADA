@@ -22,13 +22,6 @@ public class TagController : ControllerBase
     // DIGITAL OUTPUT
 
     [HttpGet]
-    [Route("DO/ids")]
-    public IActionResult GetAllDOIds()
-    {
-        return Ok(_tagService.GetAllDigitalOutputIds());
-    }
-    
-    [HttpGet]
     [Route("DO")]
     public IActionResult GetAllDO()
     {
@@ -90,6 +83,13 @@ public class TagController : ControllerBase
     public IActionResult GetAllDI()
     {
         return Ok(_tagService.GetAllDI());
+    }
+    
+    [HttpGet]
+    [Route("DI/ids")]
+    public IActionResult GetAllDIIds()
+    {
+        return Ok(_tagService.GetAllDigitalInputIds());
     }
     
     [HttpPost]
