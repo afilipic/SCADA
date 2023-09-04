@@ -1,0 +1,17 @@
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\RTU.exe
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\RTU.deps.json
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\RTU.runtimeconfig.json
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\RTU.runtimeconfig.dev.json
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\RTU.dll
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\ref\RTU.dll
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\RTU.pdb
+C:\Users\anita\Desktop\SCADA\RTU\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.csproj.AssemblyReference.cache
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.AssemblyInfoInputs.cache
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.AssemblyInfo.cs
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.csproj.CoreCompileInputs.cache
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.dll
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\ref\RTU.dll
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.pdb
+C:\Users\anita\Desktop\SCADA\RTU\obj\Debug\net5.0\RTU.genruntimeconfig.cache

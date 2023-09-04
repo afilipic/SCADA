@@ -4,8 +4,8 @@ namespace SCADA_backend.Repository;
 
 public class TagRepository
 {
-    
-    // DIGITAL OUPUT
+
+    // DIGITAL OUTPUT
     
     public static Tag? GetTagById(string id)
     {
@@ -52,6 +52,21 @@ public class TagRepository
        
     // DIGITAL INPUT
     
+    public static List<String> GetAllDigitalInputIds()
+    {
+        List<String> ids = new List<string>();
+        List<DigitalInput> digitalOutputs = new();
+        AppDbContext dbContext = new AppDbContext();
+        digitalOutputs.AddRange(dbContext.DigitalInputs);
+        
+        foreach (DigitalInput output in digitalOutputs)
+        {
+            ids.Add(output.Id);
+        }
+
+        return ids;
+    }
+    
     public static List<DigitalInput> GetAllDI()
     {
         List<DigitalInput> digitalInputs = new();
@@ -70,12 +85,19 @@ public class TagRepository
     {
         AppDbContext dbContext = new AppDbContext();
         dbContext.DigitalInputs.Attach(tag);
+        dbContext.Entry(tag).Property(x => x.Value).IsModified = true;
+        dbContext.SaveChanges();
+    }
+    public static void SwitchDI(DigitalInput tag)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.DigitalInputs.Attach(tag);
         dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
         dbContext.SaveChanges();
     }
     
     // ANALOG OUTPUT
-    
+
     public static List<AnalogOutput> GetAllAO()
     {
         List<AnalogOutput> analogOutputs = new();
@@ -99,6 +121,21 @@ public class TagRepository
     
     // ANALOG INPUT
     
+    public static List<String> GetAllAnalogInputIds()
+    {
+        List<String> ids = new List<string>();
+        List<AnalogInput> analogOutputs = new();
+        AppDbContext dbContext = new AppDbContext();
+        analogOutputs.AddRange(dbContext.AnalogInputs);
+        
+        foreach (AnalogInput output in analogOutputs)
+        {
+            ids.Add(output.Id);
+        }
+
+        return ids;
+    }
+    
     public static List<AnalogInput> GetAllAI()
     {
         List<AnalogInput> analogInputs = new();
@@ -116,8 +153,21 @@ public class TagRepository
     {
         AppDbContext dbContext = new AppDbContext();
         dbContext.AnalogInputs.Attach(tag);
+        dbContext.Entry(tag).Property(x => x.Value).IsModified = true;
+        dbContext.SaveChanges();
+    }
+    public static void SwitchAI(AnalogInput tag)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.AnalogInputs.Attach(tag);
         dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
         dbContext.SaveChanges();
     }
-    
+    public static void AddAlarmAI(AnalogInput tag)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.AnalogInputs.Attach(tag);
+        dbContext.Entry(tag).Property(x => x.Alarms).IsModified = true;
+        dbContext.SaveChanges();
+    }
 }

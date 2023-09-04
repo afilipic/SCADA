@@ -6,9 +6,10 @@ namespace SCADA_backend.Service;
 
 public class TagService
 {
+    private AlarmService _alarmService = new AlarmService();
     
     // DIGITAL OUTPUT
-    
+
     public  List<DigitalOutput> GetAllDO()
     {
         return TagRepository.GetAllDO();
@@ -34,7 +35,7 @@ public class TagService
         DigitalOutput digitalTag = (DigitalOutput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
         TagRepository.ChangeDO(digitalTag);
-        
+
     }
     public  void DeleteDO(string id)
     {
@@ -51,6 +52,11 @@ public class TagService
     
     // DIGITAL INPUT
     
+    public List<String> GetAllDigitalInputIds()
+    {
+        return TagRepository.GetAllDigitalInputIds();
+    }
+    
     public  void AddDI(DigitalInput tagInfo)
     {
         if (TagRepository.GetTagById(tagInfo.Id) != null)
@@ -60,7 +66,20 @@ public class TagService
         TagRepository.SaveDI(tagInfo);
     }
     
-    public  void EditDI(string id)
+    public  void EditDI(string id, double value)
+    {
+        var tag = TagRepository.GetTagById(id);
+        if (tag == null)
+            throw new ArgumentException("Tag with the specified name does not exist!");
+        
+        
+        DigitalInput digitalTag = (DigitalInput)tag;
+        digitalTag.Value = value > 0.5 ? 1 : 0;
+        TagRepository.ChangeDI(digitalTag);
+
+    }
+    
+    public  void SwitchDI(string id)
     {
         var tag = TagRepository.GetTagById(id);
         if (tag == null)
@@ -68,7 +87,7 @@ public class TagService
         
         DigitalInput digitalTag = (DigitalInput)tag;
         digitalTag.isScanning = !digitalTag.isScanning;
-        TagRepository.ChangeDI(digitalTag);
+        TagRepository.SwitchDI(digitalTag);
         
     }
     public  void DeleteDI(string id)
@@ -80,6 +99,11 @@ public class TagService
     }
     
     // ANALOG OUTPUT
+
+    public List<String> GetAllAnalogInputIds()
+    {
+        return TagRepository.GetAllAnalogInputIds();
+    }
     
     public  List<AnalogOutput> GetAllAO()
     {
@@ -106,7 +130,7 @@ public class TagService
         AnalogOutput analogTag = (AnalogOutput)tag;
         analogTag.Value = value;
         TagRepository.ChangeAO(analogTag);
-        
+
     }
     public  void DeleteAO(string id)
     {
@@ -133,7 +157,23 @@ public class TagService
         TagRepository.SaveAI(tagInfo);
     }
     
-    public  void EditAI(string id)
+    public  void EditAI(string id, double value)
+    {
+        var tag = TagRepository.GetTagById(id);
+        if (tag == null)
+            throw new ArgumentException("Tag with the specified name does not exist!");
+        
+        AnalogInput analogTag = (AnalogInput)tag;
+        analogTag.Value = value;
+        TagRepository.ChangeAI(analogTag);
+        
+        if(value > analogTag.HighLimit || value < analogTag.LowLimit)
+        {
+            _alarmService.AddAlarm(analogTag);
+        }
+
+    }
+    public  void SwitchAI(string id)
     {
         var tag = TagRepository.GetTagById(id);
         if (tag == null)
@@ -141,7 +181,7 @@ public class TagService
         
         AnalogInput analogTag = (AnalogInput)tag;
         analogTag.isScanning = !analogTag.isScanning;
-        TagRepository.ChangeAI(analogTag);
+        TagRepository.SwitchAI(analogTag);
         
     }
     public  void DeleteAI(string id)

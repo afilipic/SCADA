@@ -7,6 +7,7 @@ public class AnalogOutput : Tag
     public string Units { get; set; }
     public double InitialValue { get; set; }
     public double Value { get; set; }
+    
 
     public AnalogOutput() { }
 
@@ -20,5 +21,6 @@ public class AnalogOutput : Tag
         Units = units;
         InitialValue = initialValue;
         Value = value;
+
     }
 }

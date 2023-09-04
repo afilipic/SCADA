@@ -77,11 +77,34 @@ public class TagController : ControllerBase
     
     // DIGITAL INPUT
     
+    
     [HttpGet]
     [Route("DI")]
     public IActionResult GetAllDI()
     {
         return Ok(_tagService.GetAllDI());
+    }
+    
+    [HttpGet]
+    [Route("DI/ids")]
+    public IActionResult GetAllDIIds()
+    {
+        return Ok(_tagService.GetAllDigitalInputIds());
+    }
+    
+    [HttpPost]
+    [Route("DI/{id}/{value}")]
+    public IActionResult ValueDIFromRTU(string id, double value)
+    {
+        try
+        {
+            _tagService.EditDI(id, value);
+            return Ok("Successfully updated digital input value!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
     }
     
     [HttpPost]
@@ -99,13 +122,28 @@ public class TagController : ControllerBase
         }
     }
     
+    
     [HttpPut]
     [Route("DI/{id}")]
-    public IActionResult EditDI(string id)
+    public IActionResult EditDI(string id, [FromBody] DIeditDTO tag)
     {
         try
         {
-            _tagService.EditDI(id);
+            _tagService.EditDI(id, tag.Value);
+            return Ok("Input tag value successfully changed!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
+    [HttpPut]
+    [Route("DI/switch/{id}")]
+    public IActionResult SwitchDI(string id)
+    {
+        try
+        {
+            _tagService.SwitchDI(id);
             return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -189,6 +227,28 @@ public class TagController : ControllerBase
     // ANALOG INPUT
     
     [HttpGet]
+    [Route("AI/ids")]
+    public IActionResult GetAllAIIds()
+    {
+        return Ok(_tagService.GetAllAnalogInputIds());
+    }
+    
+    [HttpPost]
+    [Route("AI/{id}/{value}")]
+    public IActionResult ValueAIFromRTU(string id, double value)
+    {
+        try
+        {
+            _tagService.EditAI(id, value);
+            return Ok("Successfully updated analog input value!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
+        }
+    }
+    
+    [HttpGet]
     [Route("AI")]
     public IActionResult GetAllAI()
     {
@@ -214,16 +274,30 @@ public class TagController : ControllerBase
     
     [HttpPut]
     [Route("AI/{id}")]
-    public IActionResult EditAO(string id)
+    public IActionResult EditAI(string id, [FromBody] AnalogInput tag)
     {
         try
         {
-            _tagService.EditAI(id);
-            return Ok("Analog input tag value successfully changed!");
+            _tagService.EditAI(id, tag.Value);
+            return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
         {
-            return BadRequest( "Bad request!");
+            return BadRequest("Bad request!");
+        }
+    }
+    [HttpPut]
+    [Route("AI/switch/{id}")]
+    public IActionResult SwitchAI(string id)
+    {
+        try
+        {
+            _tagService.SwitchAI(id);
+            return Ok("Input tag value successfully changed!");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest("Bad request!");
         }
     }
     

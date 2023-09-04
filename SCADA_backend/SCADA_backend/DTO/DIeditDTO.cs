@@ -11,14 +11,17 @@ public class DIeditDTO
     public double ScanTime { get; set; }
     public bool isScanning { get; set; }
     
+    public double Value { get; set; }
+    
     public DIeditDTO() {}
 
-    public DIeditDTO(string description, int address, DriverType driver, double scanTime, bool isScanning)
+    public DIeditDTO(string description, int address, DriverType driver, double scanTime, bool isScanning, double value)
     {
         Description = description;
         Address = address;
         Driver = driver;
         ScanTime = scanTime;
         this.isScanning = isScanning;
+        Value = value;
     }
 }
