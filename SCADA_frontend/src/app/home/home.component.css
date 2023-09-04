@@ -1,0 +1,466 @@
+
+body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    
+  }
+
+  #menu {
+   
+    margin-left: 0;
+
+  }
+  #main {
+   background-color: #FFFFFF;
+   border-radius: 40px;
+   margin-top: 25px;
+   margin-bottom: 25px;
+   margin-right: 25px;
+   padding-left: 30px;
+
+  }
+  .logo{
+    margin-left: 38px;
+    height: 130px;
+  }
+  #buttons {
+    margin-top: 50px;
+    padding-right: 40px;
+  }
+  .context{
+    margin-top: 40px;
+  }
+  #title {
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  #separator {
+    border-top: 3px solid #c1e166;
+    margin-bottom: 20px;
+  }
+
+
+
+  .menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    padding-left: 40px;
+    border: none;
+    background-color: transparent; /* Remove the background color when it's not hovered */
+    border-radius: 0; 
+    color: #6A6B67;
+    font-weight: lighter;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    padding-right: 40px;
+    height: 70px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-radius 0.3s;
+             /* Ensure it's 30px away from the right side of its container */
+}
+
+.menu-button:hover {
+    background-color: #003C39;    /* Add background color on hover */
+    border-radius: 0 25px 25px 0; /* Add border-radius to the top right and bottom right corners on hover */
+    font-weight: lighter;
+}
+.menu-button.active {
+    background-color: #003C39;    /* Add background color on hover */
+    border-radius: 0 25px 25px 0; /* Add border-radius to the top right and bottom right corners on hover */
+    font-weight: lighter;
+    color: #FFFFFF;
+}
+  .logoutBtn{
+    color: #262626;
+    margin-bottom: 10px;
+  }
+
+  .menu-button:hover {
+    color: #FFFFFF;
+    background-color: linear-gradient(to right, #4EB1B6, #98CDCF);
+  }
+
+  .clicked {
+    color: #0f555b;
+    background-color: linear-gradient(to right, #4EB1B6, #98CDCF);
+  }
+
+  .button-icon {
+    width: 53px;
+    height: 53px;
+    margin-right: 9px;
+    margin-top: 35px;
+  }
+  .ic{
+    font-size: 19px;
+  }
+  .button-text {
+    font-size: 19px;
+    vertical-align: middle;
+    font-weight: 600;
+  }
+  .mainm{
+    margin-top: 40px;
+    margin-right: 55px;
+    margin-bottom: 40px;
+  }
+
+  .btn{
+    display: inline-block;
+    clear: both;
+    font-family: inherit;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: initial;
+    border: none;
+    border-radius: .2rem;
+    outline: none;
+    padding: 0 1rem;
+    height: 36px;
+    margin-top: 20px;
+    line-height: 36px;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    background: #0f555b;
+    border-color: #0f555b;
+    cursor: pointer;
+  }
+
+  .folder-input{
+    border-radius: .2rem;
+    font-size: 14px;
+    width:180px;
+    text-decoration: none;
+    text-transform: initial;
+    border: line, #0f555b;
+    margin-top: 20px;
+    height: 2rem;
+  }
+
+  .share-input{
+    border-radius: .2rem;
+    font-size: 14px;
+    width:180px;
+    text-decoration: none;
+    margin: 10px;
+    height: 2rem;
+  }
+
+  .folder-div{
+    padding-left: 40px;
+    background-color: white; 
+    border-radius: .2rem;
+    width: 220px;
+    height: 126px;
+  }
+
+  .folder-div2{
+    margin-left: 40px; 
+    margin-right: 40px;
+    border-radius: .2rem;
+    width: 220px;
+    height: 126px;
+  }
+  .share-div{
+    width: 200px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: absolute; 
+    right: 150;
+    z-index: 9999;
+  }
+
+  .card {
+    background-color: #003C39;
+    border-radius: 40px;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.6s ease;
+  }
+  .card:hover {
+    transform: scale(1.03);
+  }
+
+  .card-icon {
+    align-self: flex-start;
+    width: 20%;
+  }
+
+  .card-icon i {
+    margin-top: 10px;
+    font-size: 34px;
+    margin-bottom: 10px;
+    color: #d2e98f;
+  }
+
+  .card-content {
+    flex-grow: 1;
+    display: flex;
+    /* align-items: flex-end; */
+    color: #FFFFFF;
+    margin-bottom: 30px;
+    margin-top: 20px;
+  }
+
+  .card-title {
+    margin: 0;
+    color: #FFFFFF;
+  }
+
+
+  .mainTitle{
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .albums{
+    margin-bottom: 40px;
+    display: flex;
+  }
+  .invitation{
+    margin-bottom: 40px;
+  }
+
+  #file-system {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #file-system th,
+  #file-system td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    color: #0f555b;
+  }
+
+  #file-system th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  #file-system tbody tr {
+    background-color: #FFFFFF;
+  }
+
+  #file-system tbody tr:hover {
+    background-color: #d8d4d4;
+    cursor: pointer;
+  }
+
+  #file-system i {
+    margin-right: 5px;
+  }
+
+  .upload {
+    display: flex;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    height: 100%;
+    padding: 10px;
+  flex-direction: column;
+  }
+
+  .upload-title {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 22px;
+  }
+  .context {
+    display: flex;
+  }
+
+  .left-column {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  .right-column {
+    flex: 0 0 350px;
+  }
+
+  /* Rest of the CSS remains the same */
+
+  .upload-content {
+    padding: 10px;
+  }
+  .fileDataDiv{
+    margin-top: 30px;
+    margin-left: 10px;
+  }
+  .metaDataDiv{
+    margin-top: 30px;
+  }
+.btn {
+  display: inline-block;
+  clear: both;
+  font-family: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: initial;
+  border: none;
+  border-radius: .2rem;
+  outline: none;
+  padding: 0 1rem;
+  height: 36px;
+  margin-right: 10px;
+  margin-top: 20px;
+  line-height: 36px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  background: #0f555b;
+  border-color: #0f555b;
+  cursor: pointer;
+}
+
+.btn-share{
+  clear: both;
+  font-family: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: initial;
+  border: none;
+  border-radius: .2rem;
+  outline: none;
+  padding: 0 1rem;
+  height: 36px;
+  margin-left: 20px;
+  margin-top: 20px;
+  line-height: 36px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  background: #0f555b;
+  border-color: #0f555b;
+  cursor: pointer;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 16px;  /* Adjust the size as per your preference */
+    font-weight: lighter;
+    color: #c5c5c5;
+    margin-bottom: 8px;
+}
+
+.card-number {
+    margin: 0;
+    font-size: 35px;  /* Adjust the size to make it larger than the title */
+    color: #F5F5F5;
+    padding-left: 20px;
+    margin-bottom: 20px;
+
+}
+
+/* If you wish to give some space between the title and number */
+.card-number {
+    margin-top: 5px;  /* Adjust as per your preference */
+}
+.titleS{
+    text-align: center;
+    margin-top: 50px;
+    color: #003C39;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.card {
+    position: relative; /* Ensure this remains for positioning context */
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px; 
+    align-items: center;
+    margin-left: 150px;
+    right: 0;
+    bottom: 20;
+    top: 10;
+    margin-right: 22px;
+    
+    
+    
+}
+
+.action-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #c1e166;
+    font-weight: lighter;
+    font-size: 18px;     /* Increased font-size for the icons */
+    display: inline-flex;
+    align-items: center; 
+    justify-content: center;
+    transition: #c1e166 0.3s; 
+    border-radius: 8px;  /* Optional: adding a slight border-radius for aesthetics */
+}
+
+.action-btn i.fas {
+    font-size: inherit;  /* Ensure that the icon inherits the font-size of the button */
+}
+
+
+/* Updated the toggle-switch positioning */
+.toggle-switch {
+    position: absolute; 
+    top: 0;  /* Place at the top */
+    right: 0;  /* Place at the right */
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 22px;
+    margin-top: 20px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #c1e166   ;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
