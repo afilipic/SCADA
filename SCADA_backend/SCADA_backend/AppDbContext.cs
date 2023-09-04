@@ -12,12 +12,15 @@ public class AppDbContext : DbContext
     public DbSet<DigitalInput> DigitalInputs { get; set; }
     public DbSet<DigitalOutput> DigitalOutputs { get; set; }
     public DbSet <Tag> Tags { get; set; }
-    
+    public DbSet <Alarm> Alarms { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Tag>()
             .ToTable("Tags");
-
+        modelBuilder.Entity<Alarm>()
+            .ToTable("Alarms");
         modelBuilder.Entity<AnalogInput>()
             .ToTable("AnalogInputs")
             .HasBaseType<Tag>();

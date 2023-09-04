@@ -6,7 +6,7 @@ public class DigitalInput : Tag
     public double ScanTime { get; set; }
     public bool isScanning { get; set; }
     public double Value { get; set; }
-    
+
     public DigitalInput() {}
 
     public DigitalInput(string id, string description, int address, DriverType driver, double scanTime, bool isScanning, double value)
