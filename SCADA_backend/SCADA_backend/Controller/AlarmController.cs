@@ -20,13 +20,13 @@ public class AlarmController : ControllerBase
     {
         return Ok(_alarmService.GetAll());
     }
-    
-    [HttpPost]
-    public IActionResult addAlarm(AlarmDTO alarm)
-    { 
-        _alarmService.Add(alarm);
-        return Ok("Alarm successfully created!");
-    }
+    //
+    // [HttpPost]
+    // public IActionResult addAlarm(AlarmDTO alarm)
+    // { 
+    //     _alarmService.Add(alarm);
+    //     return Ok("Alarm successfully created!");
+    // }
     
     [HttpDelete]
     [Route("{id}")]

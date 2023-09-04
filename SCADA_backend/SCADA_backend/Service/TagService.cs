@@ -70,6 +70,7 @@ public class TagService
         if (tag == null)
             throw new ArgumentException("Tag with the specified name does not exist!");
         
+        
         DigitalInput digitalTag = (DigitalInput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
         TagRepository.ChangeDI(digitalTag);
@@ -166,13 +167,7 @@ public class TagService
         
         if(value > analogTag.HighLimit || value < analogTag.LowLimit)
         {
-            var alarm = AlarmRepository.GetByTagId(id);
-            if (alarm != null)
-            {
-                var limit = value > analogTag.HighLimit ? analogTag.HighLimit : analogTag.LowLimit;
-                _alarmService.Trigger(id, analogTag.Value, limit);
-            }
-                
+            _alarmService.AddAlarm(analogTag);
         }
 
     }

@@ -29,4 +29,9 @@ public class AnalogInput : Tag
         Alarms = new List<Alarm>();
 
     }
+
+    public void AddAlarm(Alarm alarm)
+    {
+        Alarms.Add(alarm);
+    }
 }
