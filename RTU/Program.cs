@@ -15,6 +15,7 @@ namespace RTU
 
         static async Task Main(string[] args)
         {
+
             var timer = new System.Threading.Timer(
                 async _ =>
                 {
@@ -29,7 +30,7 @@ namespace RTU
                         int randomIndex = random.Next(diIds.Count);
                         string id = diIds[randomIndex];
 
-                        path = $"https://localhost:5001/tags/DI/{id}/{value}";
+                        path = $"http://localhost:5001/tags/DI/{id}/{value}";
                     }
                     else
                     {
@@ -37,7 +38,7 @@ namespace RTU
                         int randomIndex = random.Next(aiIds.Count);
                         string id = aiIds[randomIndex];
 
-                        path = $"https://localhost:5001/tags/AI/{id}/{value}";
+                        path = $"http://localhost:5001/tags/AI/{id}/{value}";
                     }
 
                     var emptyContent = new StringContent("{}", Encoding.UTF8, "application/json");
@@ -54,7 +55,7 @@ namespace RTU
                 },
                 null,
                 TimeSpan.Zero,
-                TimeSpan.FromSeconds(20));
+                TimeSpan.FromSeconds(5));
 
             Console.WriteLine("Press Enter to exit...");
             Console.ReadLine();
@@ -76,17 +77,17 @@ namespace RTU
 
         private static double Sine()
         {
-            return 100 * Math.Sin((double)DateTime.Now.Second / 60 * 2 * Math.PI); // Adjusted to a complete sine wave over a minute
+            return 100 * Math.Sin((double)DateTime.Now.Minute / 60 * 2 * Math.PI); // Adjusted to a complete sine wave over a minute
         }
 
         private static double Cosine()
         {
-            return 100 * Math.Cos((double)DateTime.Now.Second / 60 * 2 * Math.PI); // Adjusted to a complete cosine wave over a minute
+            return 100 * Math.Cos((double)DateTime.Now.Minute / 60 * 2 * Math.PI); // Adjusted to a complete cosine wave over a minute
         }
 
         private static double Ramp()
         {
-            return 100 * DateTime.Now.Second / 60.0; // Added .0 for clarity
+            return 100 * DateTime.Now.Minute / 60.0; // Added .0 for clarity
         }
 
         public static double ReturnValueDI()
@@ -103,25 +104,25 @@ namespace RTU
 
         private static double SineDI()
         {
-            double value = Math.Sin((double)DateTime.Now.Second / 60 * 2 * Math.PI);
+            double value = Math.Sin((double)DateTime.Now.Minute / 60 * 2 * Math.PI);
             return (value + 1) / 2;  // Map range from [-1, 1] to [0, 1]
         }
 
         private static double CosineDI()
         {
-            double value = Math.Cos((double)DateTime.Now.Second / 60 * 2 * Math.PI);
+            double value = Math.Cos((double)DateTime.Now.Minute / 60 * 2 * Math.PI);
             return (value + 1) / 2;  // Map range from [-1, 1] to [0, 1]
         }
 
         private static double RampDI()
         {
-            return DateTime.Now.Second / 60.0; // Added .0 for clarity
+            return DateTime.Now.Minute / 60.0; // Added .0 for clarity
         }
 
 
         public static async Task<List<string>> GetAllAIIdsAsync()
         {
-            var response = await httpClient.GetAsync("https://localhost:5001/tags/AI/ids");
+            var response = await httpClient.GetAsync("http://localhost:5001/tags/AI/ids");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -144,7 +145,7 @@ namespace RTU
 
         public static async Task<List<string>> GetAllDIIdsAsync()
         {
-            var response = await httpClient.GetAsync("https://localhost:5001/tags/DI/ids");
+            var response = await httpClient.GetAsync("http://localhost:5001/tags/DI/ids");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

@@ -7,12 +7,9 @@ namespace SCADA_backend.Service;
 public class TagService
 {
     private AlarmService _alarmService = new AlarmService();
-    // DIGITAL OUTPUT
-    public List<String> GetAllDigitalOutputIds()
-    {
-        return TagRepository.GetAllDigitalInputIds();
-    }
     
+    // DIGITAL OUTPUT
+
     public  List<DigitalOutput> GetAllDO()
     {
         return TagRepository.GetAllDO();
@@ -54,6 +51,11 @@ public class TagService
     }
     
     // DIGITAL INPUT
+    
+    public List<String> GetAllDigitalInputIds()
+    {
+        return TagRepository.GetAllDigitalInputIds();
+    }
     
     public  void AddDI(DigitalInput tagInfo)
     {
