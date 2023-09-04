@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zdqLjRsMou5ggjHbcoNh6O4NeYI6N4+MeFFog3dUOQqt8ygM7o/bIzUO0U16FJ1ZSCLPHRbQ/2vEE/jJY/UIvw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\anita\\Desktop\\SCADA\\RTU\\RTU.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\anita\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.15\\microsoft.netcore.app.host.win-x64.5.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}
