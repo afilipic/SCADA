@@ -78,6 +78,7 @@ addAO(tag : AOTag): Observable<any> {
 }
 
 editAO(tag : AOTag): Observable<any> {
+  console.log(tag)
   return this.http.put<any>(this.httpRoot + 'AO/' + tag.id, tag);
 
 }
@@ -108,7 +109,7 @@ switchAI(tagId : number): Observable<any> {
 
 }
 
-deleteAI(tagId : number): Observable<any> {
+deleteAI(tagId : string): Observable<any> {
   return this.http.delete<any>(this.httpRoot + 'AI/' + tagId);
 
 }

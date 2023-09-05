@@ -1,12 +1,12 @@
 <body>
     <div #confirmationModal class="modal">
-        <div class="modal-content">
-            <p>Are you sure you want to delete?</p>
-            <div class="modal-buttons">
-                <button class="modal-button" (click)="confirmDelete()">Yes</button>
-                <button class="modal-button" id="cancel" (click)="cancelAction()">No</button>
+            <div class="modal-content">
+                <p>Are you sure you want to delete?</p>
+                <div class="modal-buttons">
+                    <button class="modal-button" (click)="confirmDelete(idTag)">Yes</button>
+                    <button class="modal-button" id="cancel" (click)="cancelAction()">No</button>
+                </div>
             </div>
-        </div>
     </div>
     <div #editModal class="modal-edit">
         <div class="modal-content-edit">
@@ -116,7 +116,7 @@
                                 <div class="card-actions">
                                     <button class="action-btn"><i class="fas fa-bell"></i></button>
                                     <button class="action-btn" ><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id)"><i class="fas fa-trash"></i></button>
                                 </div>
                                 
                                 <!-- The toggle switch is now outside of the card-actions div -->
@@ -142,7 +142,7 @@
                                 
                                     <button class="action-btn"><i class="fas fa-bell"></i></button>
                                     <button class="action-btn" ><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id)" ><i class="fas fa-trash"></i></button>
                                     
                                 </div>
                                 
@@ -168,11 +168,11 @@
                                     <div *ngIf="editing" class="edit-container">
                                         <div class="input-row-e">
                                             <div class="input-pair">
-                                                <input type="text" [(ngModel)]="cardNumber" class="card-number-input">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
                                             </div>
                                             
                                             <div class="input-pair">
-                                                <button class="circle-btn" (click)="saveValue()">+</button>
+                                                <button class="circle-btn" (click)="saveValue(tag)">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@
                                 <div class="card-actions">
                                     <button class="action-btn" style="color: #003C39;"><i class="fas fa-pen"></i></button>
                                     <button class="action-btn" (click)="toggleEdit()"><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id)"><i class="fas fa-trash"></i></button>
                                     
                                 </div>
                             </div>
@@ -204,9 +204,9 @@
                                             <div class="input-pair">
                                                 <input type="text" [(ngModel)]="cardNumber" class="card-number-input">
                                             </div>
-                                            
+                                    
                                             <div class="input-pair">
-                                                <button class="circle-btn" (click)="saveValue()">+</button>
+                                                <button class="circle-btn">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -219,7 +219,7 @@
                                 <div class="card-actions">
                                     <button class="action-btn" style="color: #003C39;"><i class="fas fa-pen"></i></button>
                                     <button class="action-btn" (click)="toggleEdit()"><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id)"><i class="fas fa-trash"></i></button>
                                     
                                 </div>
                             </div>

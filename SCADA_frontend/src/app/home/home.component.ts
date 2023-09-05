@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TagService } from '../services/tag.service';
-import { AITag, AOTag, DITag, DOTag } from '../models/Tag';
+import { AITag, AOTag, DITag, DOTag, Tag } from '../models/Tag';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +13,7 @@ export class HomeComponent implements AfterViewInit {
   highLimit = '';
   lowLimit = '';
   driver = '';
+  idTag = '';
   editing: boolean = false;
   cardNumber: string = '70 345'; // Default value, you can get this from your API or elsewhere
   analogInputs!: AITag[]
@@ -93,10 +94,16 @@ export class HomeComponent implements AfterViewInit {
     this.editing = !this.editing;
 }
 
-saveValue(): void {
-  // Here, you can make an API call to update the value if needed.
-  // After saving, you might want to turn off editing mode:
+saveValue(tag:AOTag): void {
   this.editing = false;
+  console.log(tag.value)
+
+  this.tagService.editAO(tag).subscribe(response => {
+    console.log('Successfully', response);
+  }, error => {
+    console.error('Error:', error);
+  });
+  
 }
 
   showContext(context: string) {
@@ -109,13 +116,24 @@ saveValue(): void {
       this.title = 'Reports';
     }
   }
-  showConfirmation(): void {
+  showConfirmation(id:string): void {
     this.confirmationModal.nativeElement.style.display = 'block';
+    this.idTag = id;
+
   }
 
-  confirmDelete(): void {
+  confirmDelete(idTag:string): void {
     console.log("Item deleted!");
     this.confirmationModal.nativeElement.style.display = 'none';
+   
+      this.tagService.deleteAI(idTag).subscribe(response => {
+        console.log('Tag deleted successfully:', response);
+        // Handle success - maybe update the UI or show a user feedback.
+      }, error => {
+        console.error('Error deleting tag:', error);
+        // Handle error - maybe show an error message to the user.
+      });
+    
   }
 
   cancelAction(): void {
