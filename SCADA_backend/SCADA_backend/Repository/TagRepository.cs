@@ -86,6 +86,7 @@ public class TagRepository
         AppDbContext dbContext = new AppDbContext();
         dbContext.DigitalInputs.Attach(tag);
         dbContext.Entry(tag).Property(x => x.Value).IsModified = true;
+        dbContext.Entry(tag).Property(x => x.ScanTime).IsModified = true;
         dbContext.SaveChanges();
     }
     public static void SwitchDI(DigitalInput tag)
@@ -154,6 +155,7 @@ public class TagRepository
         AppDbContext dbContext = new AppDbContext();
         dbContext.AnalogInputs.Attach(tag);
         dbContext.Entry(tag).Property(x => x.Value).IsModified = true;
+        dbContext.Entry(tag).Property(x => x.ScanTime).IsModified = true;
         dbContext.SaveChanges();
     }
     public static void SwitchAI(AnalogInput tag)
