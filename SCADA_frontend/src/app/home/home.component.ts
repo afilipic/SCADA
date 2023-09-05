@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TagService } from '../services/tag.service';
+import { Tag } from '../models/Tag';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,8 @@ import { TagService } from '../services/tag.service';
 })
 export class HomeComponent implements AfterViewInit {
 
+
+  tagsList! : Tag[];
   value = ''; // Sample initial value, fetch from backend or set appropriately
   highLimit = '';
   lowLimit = '';
@@ -33,13 +36,15 @@ export class HomeComponent implements AfterViewInit {
   
       this.tagService.getAllAI().subscribe({
         next: (result) => {
-      
-          console.log(result)
+          this.tagsList = result
+          console.log(this.tagsList)
+
         },
         error:(error) => {
           console.log(error)
         }
       })
+
     
 
      // Get all the buttons
