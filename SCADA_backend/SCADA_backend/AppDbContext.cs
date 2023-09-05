@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<DigitalOutput> DigitalOutputs { get; set; }
     public DbSet <Tag> Tags { get; set; }
     public DbSet <Alarm> Alarms { get; set; }
+    public DbSet<TagLog> TagLogs { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,6 +22,8 @@ public class AppDbContext : DbContext
             .ToTable("Tags");
         modelBuilder.Entity<Alarm>()
             .ToTable("Alarms");
+        modelBuilder.Entity<TagLog>()
+            .ToTable("TagLogs");
         modelBuilder.Entity<AnalogInput>()
             .ToTable("AnalogInputs")
             .HasBaseType<Tag>();

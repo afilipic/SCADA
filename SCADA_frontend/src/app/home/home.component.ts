@@ -9,6 +9,8 @@ import { AITag, AOTag, DITag, DOTag, Tag } from '../models/Tag';
 })
 export class HomeComponent implements AfterViewInit {
 
+
+  tagsList! : Tag[];
   value = ''; // Sample initial value, fetch from backend or set appropriately
   highLimit = '';
   lowLimit = '';
@@ -74,6 +76,7 @@ export class HomeComponent implements AfterViewInit {
           console.log(error)
         }
       })
+
     
 
      // Get all the buttons

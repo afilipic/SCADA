@@ -40,4 +40,15 @@ public class AlarmRepository
         dbContext.Entry(alarm).Property(x => x.isDeleted).IsModified = true;
         dbContext.SaveChanges();
     }
+
+    public static List<Alarm>? AllByPriority(int priority)
+    {
+        using var dbContext = new AppDbContext();
+        return dbContext.Alarms.Where(alarm => alarm.Priority == priority).ToList();
+    }
+    public static List<Alarm> AllByPeriod(DateTime from, DateTime to)
+    {
+        using var dbContext = new AppDbContext();
+        return dbContext.Alarms.Where(alarm => alarm.TimeStamp > from && alarm.TimeStamp < to).ToList();
+    }
 }
