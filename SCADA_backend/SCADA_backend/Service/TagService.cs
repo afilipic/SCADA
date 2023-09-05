@@ -23,7 +23,13 @@ public class TagService
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
         tagInfo.Value = tagInfo.InitialValue;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveDO(tagInfo);
+        TagRepository.AddLog(tagLog);
     }
     
     public  void EditDO(string id, double value)
@@ -69,7 +75,14 @@ public class TagService
             throw new ArgumentException("TagName already in use!");
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveDI(tagInfo);
+        TagRepository.AddLog(tagLog);
+
     }
     
     public  void EditDI(string id, double value)
@@ -131,7 +144,13 @@ public class TagService
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
         tagInfo.Value = tagInfo.InitialValue;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveAO(tagInfo);
+        TagRepository.AddLog(tagLog);
     }
     
     public  void EditAO(string id,double value)
@@ -173,7 +192,13 @@ public class TagService
             throw new ArgumentException("TagName already in use!");
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveAI(tagInfo);
+        TagRepository.AddLog(tagLog);
     }
     
     public  void EditAI(string id, double value)
