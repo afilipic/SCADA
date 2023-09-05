@@ -8,7 +8,7 @@ namespace SCADA_backend.Controller;
 
 [Route("tags")]
 [ApiController]
-// [EnableCors]
+[EnableCors]
 public class TagController : ControllerBase
 {
 
