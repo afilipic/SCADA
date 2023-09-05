@@ -785,3 +785,8 @@ input:checked + .slider:before {
 
 /* ... rest of the previously provided table styles ... */
 
+.limit-container {
+  display: flex;
+  justify-content: space-between; /* This will put some space between the two headings if there's extra space */
+  gap: 45px;
+}

@@ -74,7 +74,7 @@
             </button>
 
             <div class="button-container">
-                <button class=" logoutBtn menu-button" [routerLink]="'/login'" >
+                <button class=" logoutBtn menu-button">
                     <span class="button-icon">
                         <i class="fas fa-sign-out-alt ic"></i>
                     </span>
@@ -99,13 +99,18 @@
             <div class="context" *ngIf="activeContext === 'trending'">
                 <div class="left-column">
                     <div class="albums">
-                        <div class="card card-with-shadow" style="width: 250px;">
+                        <div class="card card-with-shadow" *ngFor="let tag of analogInputs" style="width: 250px;">
                             <div class="content-card">
                                 <div class="card-header">
+                                    <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">ANALOG</h3>
                                     <h4 class="card-title">Value</h4>
-                                    <h2 class="card-number">70 345</h2>
-                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
-                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                    <h2 class="card-number">{{tag.value}}</h2>
+                                    <div class="limit-container">
+                                        <h4 class="card-title" style="color: #4CAF50">Low limit: <span style="color: #FFFFFF;">{{tag.lowLimit}}</span></h4>
+                                        <h4 class="card-title" style="color: #4CAF50">High limit: <span style="color: #FFFFFF;">{{tag.highLimit}}</span></h4>
+                                        </div>
+                                    <h4 class="card-title">Unit: <span style="color: #FFFFFF;">{{tag.units}}</span></h4>
+                                    
                                 </div>
                                 
                                 <div class="card-actions">
@@ -116,19 +121,21 @@
                                 
                                 <!-- The toggle switch is now outside of the card-actions div -->
                                 <label class="toggle-switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox"  [checked]="tag.isScanning" (change)="tag.isScanning = !tag.isScanning">
                                     <span class="slider"></span>
                                 </label>
                             </div>
                         </div>
-
-                        <div class="card card-with-shadow" style="width: 250px;">
+                        
+                        <div class="card card-with-shadow" *ngFor="let tag of digitalInputs" style="width: 250px;">
                             <div class="content-card">
                                 <div class="card-header">
+                                    
+                                    <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">DIGITAL</h3>
                                     <h4 class="card-title">Value</h4>
-                                    <h2 class="card-number">70 345</h2>
-                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
-                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                    <h2 class="card-number">{{tag.value}}</h2>
+                                    <h4 class="card-title">Id: <span style="color: #FFFFFF;">{{tag.id}}</span> </h4>
+                                    <h4 class="card-title" style="color: #003C39;">Id: </h4>                           
                                 </div>
                                 
                                 <div class="card-actions">
@@ -139,59 +146,14 @@
                                 
                                 <!-- The toggle switch is now outside of the card-actions div -->
                                 <label class="toggle-switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox"  [checked]="tag.isScanning" (change)="tag.isScanning = !tag.isScanning">
                                     <span class="slider"></span>
                                 </label>
                             </div>
                         </div>
                         
-                        <div class="card card-with-shadow" style="width: 250px;">
-                            <div class="content-card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Value</h4>
-                                    <h2 class="card-number">70 345</h2>
-                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
-                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
-                                </div>
-                                
-                                <div class="card-actions">
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
-                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
-                                </div>
-                                
-                                <!-- The toggle switch is now outside of the card-actions div -->
-                                <label class="toggle-switch">
-                                    <input type="checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div class="card card-with-shadow" style="width: 250px;">
-                            <div class="content-card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Value</h4>
-                                    <h2 class="card-number">70 345</h2>
-                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
-                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
-                                </div>
-                                
-                                <div class="card-actions">
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
-                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
-                                </div>
-                                
-                                <!-- The toggle switch is now outside of the card-actions div -->
-                                <label class="toggle-switch">
-                                    <input type="checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        
+                
+                     
                     </div>
                 </div>
             </div>

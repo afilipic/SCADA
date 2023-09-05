@@ -2,41 +2,41 @@ import { Data } from "@angular/router"
 import { Alarm } from "./Alarm"
 
 export interface Tag{
-    Id : string,
-    Description : string,
-    Address : number,
+    id : string,
+    description : string,
+    address : number,
 }
 
 export interface DOTag extends Tag{
-    InitialValue: number,
-    Value: number
+    initialValue: number,
+    value: number
 }
 
 
 export interface DITag extends Tag{
-    DriverType : DriverType,
-    ScanTime: Date,
+    driverType : DriverType,
+    scanTime: Date,
     isScanning: boolean
-    Value: number
+    value: number
 }
 
 export interface AOTag extends Tag{
-    LowLimit: number,
-    HighLimit: number,
-    Units: string,
-    InitialValue: number,
-    Value: number
+    lowLimit: number,
+    highLimit: number,
+    units: string,
+    initialValue: number,
+    value: number
 }
 
 export interface AITag extends Tag{
-    LowLimit: number,
-    HighLimit: number,
-    Units: string,
-    DriverType : DriverType,
-    ScanTime: Date,
+    lowLimit: number,
+    highLimit: number,
+    units: string,
+    driverType : DriverType,
+    scanTime: Date,
     isScanning: boolean,
-    Value: number,
-    Alarms: Alarm[]
+    value: number,
+    alarms: Alarm[]
 
 }
 

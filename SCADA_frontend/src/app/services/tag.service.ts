@@ -30,7 +30,7 @@ addDO(tag : DOTag): Observable<any> {
 }
 
 editDO(tag : DOTag): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'DO/' + tag.Id, tag);
+  return this.http.put<any>(this.httpRoot + 'DO/' + tag.id, tag);
 
 }
 
@@ -52,7 +52,7 @@ addDI(tag : DITag): Observable<any> {
 }
 
 editDI(tag : DITag): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'DI/' + tag.Id, tag);
+  return this.http.put<any>(this.httpRoot + 'DI/' + tag.id, tag);
 
 }
 
@@ -78,7 +78,7 @@ addAO(tag : AOTag): Observable<any> {
 }
 
 editAO(tag : AOTag): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'AO/' + tag.Id, tag);
+  return this.http.put<any>(this.httpRoot + 'AO/' + tag.id, tag);
 
 }
 
@@ -89,8 +89,8 @@ deleteAO(tagId : number): Observable<any> {
 
 //ANALOG INPUT
 
-getAllAI(): Observable<any> {
-  return this.http.get<any>(this.httpRoot + 'AI');
+getAllAI(): Observable<AITag[]> {
+  return this.http.get<AITag[]>(this.httpRoot + 'AI');
 }
 
 addAI(tag : AITag): Observable<any> {
@@ -99,7 +99,7 @@ addAI(tag : AITag): Observable<any> {
 }
 
 editAI(tag : AITag): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'AI/' + tag.Id, tag);
+  return this.http.put<any>(this.httpRoot + 'AI/' + tag.id, tag);
 
 }
 
