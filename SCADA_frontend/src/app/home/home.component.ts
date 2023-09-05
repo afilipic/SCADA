@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TagService } from '../services/tag.service';
-import { AITag, AOTag, DITag } from '../models/Tag';
+import { AITag, AOTag, DITag, DOTag } from '../models/Tag';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +17,8 @@ export class HomeComponent implements AfterViewInit {
   cardNumber: string = '70 345'; // Default value, you can get this from your API or elsewhere
   analogInputs!: AITag[]
   digitalInputs!: DITag[]
+  analogOutputs!: AOTag[]
+  digitalOutputs!: DOTag[]
 
   activeContext: string = 'trending'; // default context
   title: string = 'Inputs'; // default title
@@ -46,6 +48,25 @@ export class HomeComponent implements AfterViewInit {
       this.tagService.getAllDI().subscribe({
         next: (result) => {
           this.digitalInputs = result
+          console.log(this.analogInputs[0])
+        },
+        error:(error) => {
+          console.log(error)
+        }
+      })
+
+      this.tagService.getAllAO().subscribe({
+        next: (result) => {
+          this.analogOutputs = result
+          console.log(this.analogInputs[0])
+        },
+        error:(error) => {
+          console.log(error)
+        }
+      })
+      this.tagService.getAllDO().subscribe({
+        next: (result) => {
+          this.digitalOutputs = result
           console.log(this.analogInputs[0])
         },
         error:(error) => {
