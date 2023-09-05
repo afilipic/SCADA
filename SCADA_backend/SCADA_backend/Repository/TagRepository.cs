@@ -61,7 +61,10 @@ public class TagRepository
         
         foreach (DigitalInput output in digitalOutputs)
         {
-            ids.Add(output.Id);
+            if (output.isScanning.Equals(true))
+            {
+                ids.Add(output.Id);
+            }
         }
 
         return ids;
@@ -131,7 +134,10 @@ public class TagRepository
         
         foreach (AnalogInput output in analogOutputs)
         {
-            ids.Add(output.Id);
+            if (output.isScanning.Equals(true))
+            {
+                ids.Add(output.Id);
+            }
         }
 
         return ids;
