@@ -15,13 +15,13 @@ export class TagService {
     'Content-Type': 'application/json',
   });
 
-  httpRoot = 'http://localhost:5001/tag/'
+  httpRoot = 'http://localhost:5001/tags/'
 
 
 //DIGITAL OUTPUT
 
-getAllDO(): Observable<any> {
-  return this.http.get<any>(this.httpRoot + 'DO');
+getAllDO(): Observable<DOTag[]> {
+  return this.http.get<DOTag[]>(this.httpRoot + 'DO');
 }
 
 addDO(tag : DOTag): Observable<any> {

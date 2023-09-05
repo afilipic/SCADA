@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { TagService } from '../services/tag.service';
 
 @Component({
   selector: 'app-home',
@@ -22,11 +23,24 @@ export class HomeComponent implements AfterViewInit {
  
   
 
-  constructor(private elRef: ElementRef) {} 
+  constructor(private elRef: ElementRef, private tagService : TagService) {} 
 
   ngAfterViewInit(): void {
     // This will ensure the modal element is available after view initialization.
     console.log(this.confirmationModal);
+
+ 
+  
+      this.tagService.getAllAI().subscribe({
+        next: (result) => {
+      
+          console.log(result)
+        },
+        error:(error) => {
+          console.log(error)
+        }
+      })
+    
 
      // Get all the buttons
      const buttons = this.elRef.nativeElement.querySelectorAll('.menu-button');
