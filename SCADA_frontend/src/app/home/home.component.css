@@ -177,12 +177,14 @@ body {
     z-index: 9999;
   }
 
+
   .card {
     background-color: #003C39;
     border-radius: 40px;
     padding: 30px;
     display: flex;
     flex-direction: row;
+    margin-right: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     transition: transform 0.6s ease;
   }
@@ -222,10 +224,18 @@ body {
     font-size: 22px;
     font-weight: bold;
   }
-  .albums{
-    margin-bottom: 40px;
+  .albums {
     display: flex;
-  }
+    flex-wrap: wrap; /* Distributes the cards evenly within the container */
+    overflow-y: scroll; /* This will make the div scrollable */
+    gap: 20px; /* Spacing between the cards */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    padding: 20px;
+}
+.albums::-webkit-scrollbar {
+  display: none;
+}
   .invitation{
     margin-bottom: 40px;
   }
@@ -695,3 +705,83 @@ input:checked + .slider:before {
 .save-btn:hover {
   background-color: #a8c94d;
 }
+
+.report-preview-table {
+  width: 100%; 
+  border-collapse: collapse;
+  overflow: auto;
+  display: block;
+  max-height: 300px; /* Adjust based on your needs */
+}
+
+.report-preview-table th, 
+.report-preview-table td {
+  border-bottom: 1px solid #ddd;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 15px;
+  font-size: 18px; 
+}
+
+.report-preview-table tr:nth-child(even) {
+  background-color: #f2f2f2; 
+}
+
+.report-preview-table tr:hover {
+  background-color: #ddd; 
+}
+
+.report-preview-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white; 
+}
+
+/* If you want a top border for the first row and a bottom border for the last row */
+.report-preview-table tr:first-child th {
+  border-top: 1px solid #ddd;
+}
+
+.report-preview-table tr:last-child td {
+  border-bottom: 1px solid #ddd;
+}
+
+.date-picker-container {
+  margin-bottom: 20px; /* space between date pickers and the table */
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.date-picker-group {
+  margin-right: 30px; /* space between the two date picker groups */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.date-picker-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.custom-date-picker {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.custom-date-picker:focus {
+  background-color: #fff;
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* ... rest of the previously provided table styles ... */
+

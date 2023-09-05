@@ -66,7 +66,7 @@
                 <span class="button-text">DB Manager</span>
             </button>
             
-            <button class="menu-button">
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'reports'}" (click)="showContext('reports')">
                 <span class="button-icon">
                     <i class="fas fa-file-alt ic"></i>
                 </span>
@@ -91,7 +91,7 @@
         <div class="mainm">
             <div class="title-container">
                 <div id="title">{{ title }}</div>
-                <button class="circle-btn" (click)="showCreateForm()">+</button>
+                <button class="circle-btn" *ngIf="activeContext === 'trending' || activeContext === 'dbManager' " (click)="showCreateForm()">+</button>
             </div>
             
             <div id="separator"></div>
@@ -121,16 +121,80 @@
                                 </label>
                             </div>
                         </div>
+
+                        <div class="card card-with-shadow" style="width: 250px;">
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Value</h4>
+                                    <h2 class="card-number">70 345</h2>
+                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
+                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                </div>
+                                
+                                <div class="card-actions">
+                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
+                                </div>
+                                
+                                <!-- The toggle switch is now outside of the card-actions div -->
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
                         
+                        <div class="card card-with-shadow" style="width: 250px;">
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Value</h4>
+                                    <h2 class="card-number">70 345</h2>
+                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
+                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                </div>
+                                
+                                <div class="card-actions">
+                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
+                                </div>
+                                
+                                <!-- The toggle switch is now outside of the card-actions div -->
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="card card-with-shadow" style="width: 250px;">
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Value</h4>
+                                    <h2 class="card-number">70 345</h2>
+                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
+                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                </div>
+                                
+                                <div class="card-actions">
+                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
+                                </div>
+                                
+                                <!-- The toggle switch is now outside of the card-actions div -->
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
                         
                         
                     </div>
                 </div>
-                <div class="right-column">
-
-                </div>
             </div>
-
 
             <div class="context" *ngIf="activeContext === 'dbManager'">
                 <div class="left-column">
@@ -172,6 +236,50 @@
 
                 </div>
             </div>
+
+            <div class="context" *ngIf="activeContext === 'reports'">
+                <div class="left-column">
+                    <div class="a">
+
+                        <div class="date-picker-container">
+                            <div class="date-picker-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="custom-date-picker" id="startDate" name="startDate">
+                            </div>
+                            
+                            <div class="date-picker-group">
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="custom-date-picker" id="endDate" name="endDate">
+                            </div>
+                        </div>
+            
+                
+                    </div>
+                    <div class="table">
+                        <table class="report-preview-table">
+                            <thead>
+                                <tr>
+                                    <th>Header 1</th>
+                                    <th>Header 2</th>
+                                    <th>Header 3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>Data 1</td>
+                                    <td>Data 2</td>
+                                    <td>Data 3</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+
+
         </div>
     </div>
 </body>

@@ -27,7 +27,7 @@ export class HomeComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     // This will ensure the modal element is available after view initialization.
     console.log(this.confirmationModal);
-
+    
      // Get all the buttons
      const buttons = this.elRef.nativeElement.querySelectorAll('.menu-button');
 
@@ -58,6 +58,8 @@ saveValue(): void {
       this.title = 'Inputs';
     } else if (context === 'dbManager') {
       this.title = 'Outputs';
+    }else if (context === 'reports') {
+      this.title = 'Reports';
     }
   }
   showConfirmation(): void {
