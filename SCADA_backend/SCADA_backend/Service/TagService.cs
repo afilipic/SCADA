@@ -75,6 +75,7 @@ public class TagService
         
         DigitalInput digitalTag = (DigitalInput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
+        digitalTag.ScanTime = DateTime.Now;
         TagRepository.ChangeDI(digitalTag);
 
     }
@@ -165,6 +166,7 @@ public class TagService
         
         AnalogInput analogTag = (AnalogInput)tag;
         analogTag.Value = value;
+        analogTag.ScanTime = DateTime.Now;
         TagRepository.ChangeAI(analogTag);
         
         if(value > analogTag.HighLimit || value < analogTag.LowLimit)
