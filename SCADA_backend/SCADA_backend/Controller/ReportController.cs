@@ -32,7 +32,7 @@ public class ReportController : ControllerBase
     [Route("AI")]
     public IActionResult GetLastAI()
     {
-        return Ok();
+        return Ok(TagRepository.GetAllAIreport());
     }
     
     
@@ -41,23 +41,23 @@ public class ReportController : ControllerBase
     [Route("DI")]
     public IActionResult GetLastDI()
     {
-        return Ok();
+        return Ok(TagRepository.GetAllDIreport());
     }
     
     // sve vrednosti svih tagova u odredjenom periodu
     [HttpGet]
     [Route("tags/period")]
-    public IActionResult GetAllByPeriod()
+    public IActionResult GetAllByPeriod([FromBody] Period period)
     {
-        return Ok();
+        return Ok(TagRepository.GetAllByPeriod(period.From, period.To));
     }
     
     
     // sve vrednosti trazenog taga
     [HttpGet]
     [Route("tags/{id}")]
-    public IActionResult GetAllByTagId(int id)
+    public IActionResult GetAllByTagId(string id)
     {
-        return Ok();
+        return Ok(TagRepository.GetAllById(id));
     }
 }

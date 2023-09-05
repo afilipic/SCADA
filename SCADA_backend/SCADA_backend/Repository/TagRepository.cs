@@ -11,6 +11,29 @@ public class TagRepository
         dbContext.TagLogs.Add(tagLog);
         dbContext.SaveChanges();
     }
+    public static List<AnalogInput>? GetAllAIreport()
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.AnalogInputs.ToList();
+    }
+    
+    public static List<DigitalInput>? GetAllDIreport()
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.DigitalInputs.ToList();
+    }
+    
+    public static List<TagLog>? GetAllByPeriod(DateTime from, DateTime to)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.TagLogs.Where(tag => tag.TimeStamp > from && tag.TimeStamp < to).ToList();
+    }
+    
+    public static List<TagLog>? GetAllById(string id)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.TagLogs.Where(tag => tag.TagId == id).ToList();
+    }
     
     // DIGITAL OUTPUT
     
