@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SCADA_backend.DTO;
 using SCADA_backend.Service;
@@ -5,7 +6,7 @@ using SCADA_backend.Service;
 namespace SCADA_backend.Controller;
 [Route("alarm")]
 [ApiController]
-// [EnableCors]
+[EnableCors]
 public class AlarmController : ControllerBase
 {
     private readonly AlarmService _alarmService;
