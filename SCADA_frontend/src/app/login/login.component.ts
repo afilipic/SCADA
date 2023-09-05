@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UserService } from '../services/user.service';
+import { LoginDTO, RegisterDTO } from '../models/User';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +10,10 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
+
   isCreated : boolean = false;
   userForm!: FormGroup;
-
-  constructor(private router: Router){}
+  constructor(private router: Router,private userService: UserService){}
 
   ngOnInit() {
     const signUpButton = document.getElementById('signUp') as HTMLElement | any;
@@ -28,11 +30,49 @@ export class LoginComponent implements OnInit{
     this.userForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl(''),
-      name: new FormControl(''),
-      family_name : new FormControl(''),
-      registration_code : new FormControl(''),
-      code: new FormControl('')
+      confpassword : new FormControl(''),
     });
   }
 
+
+  signIn(){
+    const user: LoginDTO  = this.userForm.value;
+ 
+
+    this.userService.signIn(user).subscribe({
+      next: (result) => {
+      
+        console.log(result)
+        this.router.navigate(['/home']);
+      },
+      error:(error) => {
+        console.log(error)
+      }
+    })
+  }
+
+  signUp(){
+    const user: RegisterDTO  = this.userForm.value;
+    if (user.password != user.confpassword){
+      console.log("Passwords do not mathc")
+
+      return 
+    }
+    const newUser : LoginDTO = {
+      username : user.username,
+      password : user.password
+    }
+
+    this.userService.signUp(newUser).subscribe({
+      next: (result) => {
+    
+        console.log(result)
+        this.router.navigate(['/login']);
+
+      },
+      error:(error) => {
+        console.log(error)
+      }
+    })
+  }
 }

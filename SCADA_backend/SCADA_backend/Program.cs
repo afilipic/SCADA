@@ -18,6 +18,11 @@ builder.Services.AddDbContext<AppDbContext>();
 
 
 var app = builder.Build();
+app.UseCors(corsPolicyBuilder =>
+    corsPolicyBuilder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+);
 app.MapControllers();
 app.Run();
 
