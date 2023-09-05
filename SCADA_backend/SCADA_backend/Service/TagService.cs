@@ -34,7 +34,13 @@ public class TagService
         
         DigitalOutput digitalTag = (DigitalOutput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, digitalTag.Id, DateTime.Now, digitalTag.Value);
+        
         TagRepository.ChangeDO(digitalTag);
+        TagRepository.AddLog(tagLog);
 
     }
     public  void DeleteDO(string id)
@@ -76,7 +82,13 @@ public class TagService
         DigitalInput digitalTag = (DigitalInput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
         digitalTag.ScanTime = DateTime.Now;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, digitalTag.Id, digitalTag.ScanTime, digitalTag.Value);
+        
         TagRepository.ChangeDI(digitalTag);
+        TagRepository.AddLog(tagLog);
 
     }
     
@@ -130,7 +142,13 @@ public class TagService
         
         AnalogOutput analogTag = (AnalogOutput)tag;
         analogTag.Value = value;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, analogTag.Id, DateTime.Now, analogTag.Value);
+        
         TagRepository.ChangeAO(analogTag);
+        TagRepository.AddLog(tagLog);
 
     }
     public  void DeleteAO(string id)
@@ -167,7 +185,13 @@ public class TagService
         AnalogInput analogTag = (AnalogInput)tag;
         analogTag.Value = value;
         analogTag.ScanTime = DateTime.Now;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, analogTag.Id, analogTag.ScanTime, analogTag.Value);
+        
         TagRepository.ChangeAI(analogTag);
+        TagRepository.AddLog(tagLog);
         
         if(value > analogTag.HighLimit || value < analogTag.LowLimit)
         {

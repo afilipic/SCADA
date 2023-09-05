@@ -5,6 +5,13 @@ namespace SCADA_backend.Repository;
 public class TagRepository
 {
 
+    public static void AddLog(TagLog tagLog)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.TagLogs.Add(tagLog);
+        dbContext.SaveChanges();
+    }
+    
     // DIGITAL OUTPUT
     
     public static Tag? GetTagById(string id)
