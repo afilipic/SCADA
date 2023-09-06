@@ -46,12 +46,12 @@ public class TagController : ControllerBase
 
 
     [HttpPut]
-    [Route("DO/{id}")]
-    public IActionResult EditDO(string id, [FromBody] DOeditDTO tag)
+    [Route("DO/{id}/{value}")]
+    public IActionResult EditDO(string id, double value)
     {
         try
         {
-            _tagService.EditDO(id, tag.Value);
+            _tagService.EditDO(id, value);
             return Ok("Output tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -124,12 +124,12 @@ public class TagController : ControllerBase
     
     
     [HttpPut]
-    [Route("DI/{id}")]
-    public IActionResult EditDI(string id, [FromBody] DIeditDTO tag)
+    [Route("DI/{id}/{value}")]
+    public IActionResult EditDI(string id, double value)
     {
         try
         {
-            _tagService.EditDI(id, tag.Value);
+            _tagService.EditDI(id, value);
             return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -193,8 +193,8 @@ public class TagController : ControllerBase
 
 
     [HttpPut]
-    [Route("AO/{id}")]
-    public IActionResult EditAO(string id, [FromBody] double value)
+    [Route("AO/{id}/{value}")]
+    public IActionResult EditAO(string id, double value)
     {
         try
         {
@@ -273,12 +273,12 @@ public class TagController : ControllerBase
 
     
     [HttpPut]
-    [Route("AI/{id}")]
-    public IActionResult EditAI(string id, [FromBody] AnalogInput tag)
+    [Route("AI/{id}/{value}")]
+    public IActionResult EditAI(string id, double value)
     {
         try
         {
-            _tagService.EditAI(id, tag.Value);
+            _tagService.EditAI(id, value);
             return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)

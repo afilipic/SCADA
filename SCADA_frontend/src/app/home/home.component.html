@@ -74,7 +74,7 @@
             </button>
 
             <div class="button-container">
-                <button class=" logoutBtn menu-button">
+                <button class=" logoutBtn menu-button" [routerLink]="'/login'">
                     <span class="button-icon">
                         <i class="fas fa-sign-out-alt ic"></i>
                     </span>
@@ -104,7 +104,19 @@
                                 <div class="card-header">
                                     <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">ANALOG</h3>
                                     <h4 class="card-title">Value</h4>
-                                    <h2 class="card-number">{{tag.value}}</h2>
+                                    <div *ngIf="editing && tag.id == editId" class="edit-container">
+                                        <div class="input-row-e">
+                                            <div class="input-pair">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
+                                            </div>
+                                            
+                                            <div class="input-pair">
+                                                <button class="circle-btn" (click)="saveValue(tag, 'AI')">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Show the card number text if editing is false -->
+                                    <h2 *ngIf="!editing && tag.id == editId || tag.id != editId" class="card-number">{{ tag.value }}</h2>
                                     <div class="limit-container">
                                         <h4 class="card-title" style="color: #4CAF50">Low limit: <span style="color: #FFFFFF;">{{tag.lowLimit}}</span></h4>
                                         <h4 class="card-title" style="color: #4CAF50">High limit: <span style="color: #FFFFFF;">{{tag.highLimit}}</span></h4>
@@ -114,14 +126,14 @@
                                 </div>
                                 
                                 <div class="card-actions">
-                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
-                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation(tag.id)"><i class="fas fa-trash"></i></button>
+                                    <!-- <button class="action-btn"><i class="fas fa-bell"></i></button> -->
+                                    <button class="action-btn"   (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id, 'AI')"><i class="fas fa-trash"></i></button>
                                 </div>
                                 
                                 <!-- The toggle switch is now outside of the card-actions div -->
                                 <label class="toggle-switch">
-                                    <input type="checkbox"  [checked]="tag.isScanning" (change)="tag.isScanning = !tag.isScanning">
+                                    <input type="checkbox"  [checked]="tag.isScanning" (click)="switch(tag.id, 'AI')" (change)="tag.isScanning = !tag.isScanning">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -133,22 +145,34 @@
                                     
                                     <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">DIGITAL</h3>
                                     <h4 class="card-title">Value</h4>
-                                    <h2 class="card-number">{{tag.value}}</h2>
+                                    <div *ngIf="editing" class="edit-container">
+                                        <div class="input-row-e">
+                                            <div class="input-pair">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
+                                            </div>
+                                            
+                                            <div class="input-pair">
+                                                <button class="circle-btn" (click)="saveValue(tag, 'DI')">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Show the card number text if editing is false -->
+                                    <h2 *ngIf="!editing" class="card-number">{{ tag.value }}</h2>
                                     <h4 class="card-title">Id: <span style="color: #FFFFFF;">{{tag.id}}</span> </h4>
                                     <h4 class="card-title" style="color: #003C39;">Id: </h4>                           
                                 </div>
                                 
                                 <div class="card-actions">
                                 
-                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
-                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation(tag.id)" ><i class="fas fa-trash"></i></button>
+                                    <!-- <button class="action-btn"><i class="fas fa-bell"></i></button> -->
+                                    <button class="action-btn" (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id,'DI')" ><i class="fas fa-trash"></i></button>
                                     
                                 </div>
                                 
                                 <!-- The toggle switch is now outside of the card-actions div -->
                                 <label class="toggle-switch">
-                                    <input type="checkbox"  [checked]="tag.isScanning" (change)="tag.isScanning = !tag.isScanning">
+                                    <input type="checkbox"  [checked]="tag.isScanning" (click)="switch(tag.id, 'DI')" (change)="tag.isScanning = !tag.isScanning">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -172,7 +196,7 @@
                                             </div>
                                             
                                             <div class="input-pair">
-                                                <button class="circle-btn" (click)="saveValue(tag)">+</button>
+                                                <button class="circle-btn" (click)="saveValue(tag, 'AO')">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -187,8 +211,8 @@
                                 
                                 <div class="card-actions">
                                     <button class="action-btn" style="color: #003C39;"><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="toggleEdit()"><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation(tag.id)"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id, 'AO')"><i class="fas fa-trash"></i></button>
                                     
                                 </div>
                             </div>
@@ -202,11 +226,11 @@
                                     <div *ngIf="editing" class="edit-container">
                                         <div class="input-row-e">
                                             <div class="input-pair">
-                                                <input type="text" [(ngModel)]="cardNumber" class="card-number-input">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
                                             </div>
-                                    
+                                            
                                             <div class="input-pair">
-                                                <button class="circle-btn">+</button>
+                                                <button class="circle-btn" (click)="saveValue(tag, 'DO')">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -218,8 +242,8 @@
                                 
                                 <div class="card-actions">
                                     <button class="action-btn" style="color: #003C39;"><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="toggleEdit()"><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn" (click)="showConfirmation(tag.id)"><i class="fas fa-trash"></i></button>
+                                    <button class="action-btn" (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id, 'DO')"><i class="fas fa-trash"></i></button>
                                     
                                 </div>
                             </div>

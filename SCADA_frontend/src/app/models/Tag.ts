@@ -5,11 +5,11 @@ export interface Tag{
     id : string,
     description : string,
     address : number,
+    value: number,
 }
 
 export interface DOTag extends Tag{
     initialValue: number,
-    value: number
 }
 
 
@@ -17,7 +17,6 @@ export interface DITag extends Tag{
     driverType : DriverType,
     scanTime: Date,
     isScanning: boolean
-    value: number
 }
 
 export interface AOTag extends Tag{
@@ -25,7 +24,6 @@ export interface AOTag extends Tag{
     highLimit: number,
     units: string,
     initialValue: number,
-    value: number
 }
 
 export interface AITag extends Tag{
@@ -35,7 +33,6 @@ export interface AITag extends Tag{
     driverType : DriverType,
     scanTime: Date,
     isScanning: boolean,
-    value: number,
     alarms: Alarm[]
 
 }

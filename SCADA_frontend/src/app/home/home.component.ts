@@ -12,12 +12,17 @@ export class HomeComponent implements AfterViewInit {
 
   tagsList! : Tag[];
   value = ''; // Sample initial value, fetch from backend or set appropriately
+  cardNumber: string = '70 345'; // Default value, you can get this from your API or elsewhere
   highLimit = '';
   lowLimit = '';
   driver = '';
   idTag = '';
+
+
   editing: boolean = false;
-  cardNumber: string = '70 345'; // Default value, you can get this from your API or elsewhere
+  editId : string = "";
+  deleteType : string = "";
+
   analogInputs!: AITag[]
   digitalInputs!: DITag[]
   analogOutputs!: AOTag[]
@@ -93,15 +98,16 @@ export class HomeComponent implements AfterViewInit {
        });
      });
   }
-  toggleEdit(): void {
+  toggleEdit(id : string): void {
     this.editing = !this.editing;
+    this.editId = id;
 }
 
-saveValue(tag:AOTag): void {
+saveValue(tag:Tag, type : string): void {
   this.editing = false;
-  console.log(tag.value)
 
-  this.tagService.editAO(tag).subscribe(response => {
+ 
+  this.tagService.editTag(tag.id, tag.value, type).subscribe(response => {
     console.log('Successfully', response);
   }, error => {
     console.error('Error:', error);
@@ -119,7 +125,10 @@ saveValue(tag:AOTag): void {
       this.title = 'Reports';
     }
   }
-  showConfirmation(id:string): void {
+
+
+  showConfirmation(id:string, type : string): void {
+    this.deleteType = type;
     this.confirmationModal.nativeElement.style.display = 'block';
     this.idTag = id;
 
@@ -129,7 +138,7 @@ saveValue(tag:AOTag): void {
     console.log("Item deleted!");
     this.confirmationModal.nativeElement.style.display = 'none';
    
-      this.tagService.deleteAI(idTag).subscribe(response => {
+      this.tagService.deleteTag(idTag, this.deleteType).subscribe(response => {
         console.log('Tag deleted successfully:', response);
         // Handle success - maybe update the UI or show a user feedback.
       }, error => {
@@ -157,5 +166,13 @@ saveValue(tag:AOTag): void {
     console.log('Edited value:', this.value, this.highLimit, this.lowLimit);
 
     this.hideEditForm();
+  }
+
+  switch (id : string, type: string) {
+     this.tagService.switch(id, type).subscribe(response => {
+    console.log('Successfully', response);
+  }, error => {
+    console.error('Error:', error);
+  });
   }
 }

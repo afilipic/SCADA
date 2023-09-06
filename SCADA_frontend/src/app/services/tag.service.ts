@@ -18,6 +18,21 @@ export class TagService {
   httpRoot = 'http://localhost:5001/tags/'
 
 
+
+  editTag(id : string, value: number, type : string): Observable<any> {
+    return this.http.put<any>(this.httpRoot + type +'/' + id + "/" + value, null);
+  
+  }
+  switch(tagId : string, type : string): Observable<any> {
+    return this.http.put<any>(this.httpRoot + type + '/switch/' + tagId, null);
+  
+  }
+
+  deleteTag(tagId : string, type : string): Observable<any> {
+    return this.http.delete<any>(this.httpRoot + type + '/' + tagId);
+  
+  }
+
 //DIGITAL OUTPUT
 
 getAllDO(): Observable<DOTag[]> {
@@ -29,21 +44,13 @@ addDO(tag : DOTag): Observable<any> {
 
 }
 
-editDO(tag : DOTag): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'DO/' + tag.id, tag);
 
-}
-
-deleteDO(tagId : number): Observable<any> {
-  return this.http.delete<any>(this.httpRoot + 'DO/' + tagId);
-
-}
 
 
 //DIGITAL INPUT
 
-getAllDI(): Observable<any> {
-  return this.http.get<any>(this.httpRoot + 'DI');
+getAllDI(): Observable<DITag[]> {
+  return this.http.get<DITag[]>(this.httpRoot + 'DI');
 }
 
 addDI(tag : DITag): Observable<any> {
@@ -51,25 +58,13 @@ addDI(tag : DITag): Observable<any> {
 
 }
 
-editDI(tag : DITag): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'DI/' + tag.id, tag);
 
-}
 
-switchDI(tagId : number): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'DI/switch/' + tagId, null);
-
-}
-
-deleteDI(tagId : number): Observable<any> {
-  return this.http.delete<any>(this.httpRoot + 'DI/' + tagId);
-
-}
 
 //ANALOG OUTPUT
 
-getAllAO(): Observable<any> {
-  return this.http.get<any>(this.httpRoot + 'AO');
+getAllAO(): Observable<AOTag[]> {
+  return this.http.get<AOTag[]>(this.httpRoot + 'AO');
 }
 
 addAO(tag : AOTag): Observable<any> {
@@ -77,16 +72,6 @@ addAO(tag : AOTag): Observable<any> {
 
 }
 
-editAO(tag : AOTag): Observable<any> {
-  console.log(tag)
-  return this.http.put<any>(this.httpRoot + 'AO/' + tag.id, tag);
-
-}
-
-deleteAO(tagId : number): Observable<any> {
-  return this.http.delete<any>(this.httpRoot + 'AO/' + tagId);
-
-}
 
 //ANALOG INPUT
 
@@ -99,20 +84,8 @@ addAI(tag : AITag): Observable<any> {
 
 }
 
-editAI(tag : AITag): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'AI/' + tag.id, tag);
 
-}
 
-switchAI(tagId : number): Observable<any> {
-  return this.http.put<any>(this.httpRoot + 'AI/switch/' + tagId, null);
-
-}
-
-deleteAI(tagId : string): Observable<any> {
-  return this.http.delete<any>(this.httpRoot + 'AI/' + tagId);
-
-}
 
 
 }
