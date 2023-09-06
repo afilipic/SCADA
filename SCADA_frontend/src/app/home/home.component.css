@@ -177,12 +177,14 @@ body {
     z-index: 9999;
   }
 
+
   .card {
     background-color: #003C39;
     border-radius: 40px;
     padding: 30px;
     display: flex;
     flex-direction: row;
+    margin-right: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     transition: transform 0.6s ease;
   }
@@ -222,10 +224,18 @@ body {
     font-size: 22px;
     font-weight: bold;
   }
-  .albums{
-    margin-bottom: 40px;
+  .albums {
     display: flex;
-  }
+    flex-wrap: wrap; /*Distributes the cards evenly within the container*/
+    overflow-y: scroll; /* This will make the div scrollable */
+    gap: 20px; /* Spacing between the cards */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    padding: 20px;
+}
+.albums::-webkit-scrollbar {
+  display: none;
+}
   .invitation{
     margin-bottom: 40px;
   }
@@ -466,6 +476,39 @@ input:checked + .slider:before {
 }
 
 
+.create-button {
+  background-color: #888; /* Example color */
+  color: white;
+  width: 50%;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transition for a smoother color change */
+}
+.create-button-checked {
+  background-color: #c1e166; /* Example color */
+  color: white;
+  width: 50%;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transition for a smoother color change */
+}
+.create-button:hover {
+  background-color: #9cb84f; /* Darker shade of the original color */
+}
+
+
 .modal {
   display: none;  /* initially hidden */
   position: fixed; /* Stay in place */
@@ -622,6 +665,7 @@ input:checked + .slider:before {
   background-color: #9cb84f;
 }
 
+
 .input-row {
   display:flex;
  gap: 20px;
@@ -640,6 +684,48 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;  /* Vertically aligns the title and button in case they have different heights */
   justify-content: space-between; /* Ensures the title is on the left and button is on the right */
+
+}
+
+.report-btn {
+  width: 120px;   /* You can adjust to make the button bigger or smaller */
+  height: 50px;
+  background-color: grey;
+  border: none;
+  margin-bottom: 6px;
+  border-radius: 15px; 
+  cursor: pointer; /* Changes the cursor to a hand when hovering */
+  transition: 0.3s; /* Smooth transition for hover effects */
+  font-size: 16px;
+}
+
+.report-btn-checked {
+  background-color: #c1e166;
+}
+
+.btn2{
+  margin-top: 10px;
+  margin-bottom: 0;
+  background-color:#003C39;
+  color:white;
+  text-emphasis: bold;
+  transition: transform 0.2s; /* Add a smooth transition effect */
+
+}
+.fix{
+  margin-bottom: 8px;
+}
+
+
+.report-btn:hover {
+  /* Adjust this as per your desired hover effect. This example darkens the color */
+  background-color: #a8c04b; 
+}
+
+.btn2:hover{
+  background-color:#003C39;
+  color:white;
+  transform: scale(1.05); /* Increase the size by 10% on hover */
 
 }
 .circle-btn {
@@ -692,6 +778,123 @@ input:checked + .slider:before {
   font-size: 17px;
 }
 
+
 .save-btn:hover {
   background-color: #a8c94d;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0; /* Stick the header to the top of the container */
+  background-color: #f5f5f5; /* Add a background color for the header */
+  z-index: 1; /* Ensure it's above the table body */
+}
+
+.report-preview-table {
+  width: 100%; 
+  border-collapse: collapse;
+  overflow: auto;
+  display: block;
+  max-height: 400px; /* Adjust based on your needs */
+}
+
+.report-preview-table th, 
+.report-preview-table td {
+  border-bottom: 1px solid #ddd;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 15px;
+  font-size: 18px; 
+}
+
+.report-preview-table tr:nth-child(even) {
+  background-color: #f2f2f2; 
+}
+
+.report-preview-table tr:hover {
+  background-color: #ddd; 
+}
+
+.report-preview-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color:#003C39;
+  color: white; 
+}
+
+/* If you want a top border for the first row and a bottom border for the last row */
+.report-preview-table tr:first-child th {
+  border-top: 1px solid #ddd;
+}
+
+.report-preview-table tr:last-child td {
+  border-bottom: 1px solid #ddd;
+}
+
+.date-picker-container {
+  margin-bottom: 20px; /* space between date pickers and the table */
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.date-picker-group {
+  margin-right: 30px; /* space between the two date picker groups */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.date-picker-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.custom-date-picker {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.custom-date-picker:focus {
+  background-color: #fff;
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* ... rest of the previously provided table styles ... */
+
+.limit-container {
+  display: flex;
+  justify-content: space-between; /* This will put some space between the two headings if there's extra space */
+  gap: 45px;
+}
+
+
+.alert-container {
+  width: 30%;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+
+.alert {
+  background-color: #faeced;
+  /* border: 1px solid #fc1f29; */
+  border-left: 4px solid #fc1f29; /* Border on the left side */
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.alarm-input{
+  font-size: 16px;
+
+  color: black;
 }

@@ -5,6 +5,36 @@ namespace SCADA_backend.Repository;
 public class TagRepository
 {
 
+    public static void AddLog(TagLog tagLog)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        dbContext.TagLogs.Add(tagLog);
+        dbContext.SaveChanges();
+    }
+    public static List<AnalogInput>? GetAllAIreport()
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.AnalogInputs.ToList();
+    }
+    
+    public static List<DigitalInput>? GetAllDIreport()
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.DigitalInputs.ToList();
+    }
+    
+    public static List<TagLog>? GetAllByPeriod(DateTime from, DateTime to)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.TagLogs.Where(tag => tag.TimeStamp > from && tag.TimeStamp < to).ToList();
+    }
+    
+    public static List<TagLog>? GetAllById(string id)
+    {
+        AppDbContext dbContext = new AppDbContext();
+        return dbContext.TagLogs.Where(tag => tag.TagId == id).ToList();
+    }
+    
     // DIGITAL OUTPUT
     
     public static Tag? GetTagById(string id)
@@ -61,7 +91,10 @@ public class TagRepository
         
         foreach (DigitalInput output in digitalOutputs)
         {
-            ids.Add(output.Id);
+            if (output.isScanning.Equals(true))
+            {
+                ids.Add(output.Id);
+            }
         }
 
         return ids;
@@ -131,7 +164,10 @@ public class TagRepository
         
         foreach (AnalogInput output in analogOutputs)
         {
-            ids.Add(output.Id);
+            if (output.isScanning.Equals(true))
+            {
+                ids.Add(output.Id);
+            }
         }
 
         return ids;
@@ -165,11 +201,11 @@ public class TagRepository
         dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
         dbContext.SaveChanges();
     }
-    public static void AddAlarmAI(AnalogInput tag)
-    {
-        AppDbContext dbContext = new AppDbContext();
-        dbContext.AnalogInputs.Attach(tag);
-        dbContext.Entry(tag).Property(x => x.Alarms).IsModified = true;
-        dbContext.SaveChanges();
-    }
+    // public static void AddAlarmAI(AnalogInput tag)
+    // {
+    //     AppDbContext dbContext = new AppDbContext();
+    //     dbContext.AnalogInputs.Attach(tag);
+    //     dbContext.Entry(tag).Property(x => x.Alarms).IsModified = true;
+    //     dbContext.SaveChanges();
+    // }
 }

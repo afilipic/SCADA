@@ -1,72 +1,118 @@
 <body>
-    <div #confirmationModal class="modal">
-        <div class="modal-content">
-            <p>Are you sure you want to delete?</p>
-            <div class="modal-buttons">
-                <button class="modal-button" (click)="confirmDelete()">Yes</button>
-                <button class="modal-button" id="cancel" (click)="cancelAction()">No</button>
+    <div id="alert-container" class="alert-container">
+        <div *ngFor="let alarm of alarms" class="alert">
+        <h2 class="editFormTitle" style="color: #fc1f29;"> ALARM FOR {{alarm.analogInputId}} </h2>
+        <hr>
+        <div class="input-row ">
+            <div class="input-pair alarm-input">
+                <label>Limit: <span style="color: #fc1f29;"> {{alarm.limit}}</span> </label>
+            </div>  
+            <div class="input-pair alarm-input">
+                <label>Value:<span style="color: #fc1f29;"> {{alarm.value}}</span> </label>
             </div>
         </div>
+    </div>
+    </div>
+
+    <div #confirmationModal class="modal">
+            <div class="modal-content">
+                <p>Are you sure you want to delete?</p>
+                <div class="modal-buttons">
+                    <button class="modal-button" (click)="confirmDelete(idTag)">Yes</button>
+                    <button class="modal-button" id="cancel" (click)="cancelAction()">No</button>
+                </div>
+            </div>
     </div>
     <div #editModal class="modal-edit">
         <div class="modal-content-edit">
             <h2 class="editFormTitle">Add Tag</h2>
+
+            <div class="input-row">
+                <button class="create-button" [class.create-button-checked]="createTag=='DIGITAL'" (click)="createTagType('DIGITAL')"> Digital </button>
+                <button class="create-button" [class.create-button-checked]="createTag=='ANALOG'" (click)="createTagType('ANALOG')"> Analog </button>
+            </div>
+            <hr>
+
+            <form [formGroup]="newTag" action="#">
+
             <div class="input-row">
                 <div class="input-pair">
-                    <label for="lowLimit">Low limit:</label>
-                    <input type="text" id="lowLimit" [(ngModel)]="lowLimit">
-                </div>
-                
+                    <label for="id">Name (Id):</label>
+                    <input type="text" id="id" formControlName="id">
+                </div>  
                 <div class="input-pair">
-                    <label for="highLimit"></label>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" formControlName="address">
                 </div>
             </div>
-            <label for="value">Value:</label>
-            <input type="text" id="value" [(ngModel)]="value">
-            
+
+            <div class="input-pair">
+                <label for="description">Description:</label>
+                <input type="text" id="description" formControlName="description"> 
+            </div>
+
+            <div *ngIf="createTag == 'DIGITAL'" >
+                    <div class="input-pair">
+                    <label for="value">Value:</label>
+                    <input type="text" id="value" formControlName="value">
+                </div>
+
+            </div>
+
+
+            <div *ngIf="createTag == 'ANALOG'" >
+                <div class="input-row">
+                    <div class="input-pair">
+                        <label for="value">Value:</label>
+                        <input type="text" id="value" formControlName="value">
+                    </div>  
+                    <div class="input-pair">
+                        <label for="units">Units:</label>
+                        <input type="text" id="units" formControlName="units">
+                    </div>
+                </div>
+
             <div class="input-row">
                 <div class="input-pair">
                     <label for="lowLimit">Low limit:</label>
-                    <input type="text" id="lowLimit" [(ngModel)]="lowLimit">
-                </div>
-                
+                    <input type="text" id="lowLimit" formControlName="lowLimit">
+                </div>  
                 <div class="input-pair">
                     <label for="highLimit">High limit:</label>
-                    <input type="text" id="highLimit" [(ngModel)]="highLimit">
+                    <input type="text" id="highLimit" formControlName="highLimit" >
                 </div>
             </div>
         
-            
+            </div>
             <div class="modal-buttons-edit">
-                <button class="modal-button-edit" (click)="edit()">Edit</button>
+                <button class="modal-button-edit" (click)="create()">Create Tag</button>
                 <button class="modal-button-edit" id="cancel" (click)="hideEditForm()">Cancel</button>
             </div>
+        </form>
+
         </div>
+
     </div>
     
     <div id="menu">
         <!-- Menu Content Goes Here -->
         <h2 class="titleS">SCADA Sys</h2>
         <div id="buttons">
-            <button class="menu-button" [ngClass]="{'active': activeContext === 'trending'}" (click)="showContext('trending')">
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'trending'}" (click)="showContext('trending')" (click)="createTagType2('INPUT')">
                 <span class="button-icon">
                     <i class="fas fa-clipboard ic"></i>
                 </span>
                 <span class="button-text">Trending</span>
             </button>
             
-            <button class="menu-button" [ngClass]="{'active': activeContext === 'dbManager'}" (click)="showContext('dbManager')">
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'dbManager'}" (click)="showContext('dbManager')" (click)="createTagType2('OUTPUT')">
                 <span class="button-icon">
                     <i class="fas fa-clipboard ic"></i>
                 </span>
                 <span class="button-text">DB Manager</span>
             </button>
             
-            <button class="menu-button">
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'reports'}" (click)="showContext('reports')">
                 <span class="button-icon">
                     <i class="fas fa-file-alt ic"></i>
                 </span>
@@ -74,7 +120,7 @@
             </button>
 
             <div class="button-container">
-                <button class=" logoutBtn menu-button">
+                <button class=" logoutBtn menu-button" [routerLink]="'/login'">
                     <span class="button-icon">
                         <i class="fas fa-sign-out-alt ic"></i>
                     </span>
@@ -91,7 +137,15 @@
         <div class="mainm">
             <div class="title-container">
                 <div id="title">{{ title }}</div>
-                <button class="circle-btn" (click)="showCreateForm()">+</button>
+                <div class="input-row" *ngIf="activeContext === 'reports'">
+                    <button class="report-btn" [class.report-btn-checked]="report==1" (click)="showReport(1)"> Alarms by period </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==2" (click)="showReport(2)"> Alarm by priority </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==3" (click)="showReport(3)"> Tags by period </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==4" (click)="showReport(4)"> Tags by id </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==5" (click)="showReport(5)"> Current digital inputs </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==6" (click)="showReport(6)"> Current analog inputs </button>
+                </div>
+                <button class="circle-btn" *ngIf="activeContext === 'trending' || activeContext === 'dbManager' " (click)="showCreateForm()">+</button>
             </div>
             
             <div id="separator"></div>
@@ -99,79 +153,295 @@
             <div class="context" *ngIf="activeContext === 'trending'">
                 <div class="left-column">
                     <div class="albums">
-                        <div class="card card-with-shadow" style="width: 250px;">
+                        <div class="card card-with-shadow" *ngFor="let tag of analogInputs" style="width: 250px;">
                             <div class="content-card">
                                 <div class="card-header">
+                                    <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">ANALOG</h3>
                                     <h4 class="card-title">Value</h4>
-                                    <h2 class="card-number">70 345</h2>
-                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
-                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                    <div *ngIf="editing && tag.id == editId" class="edit-container">
+                                        <div class="input-row-e">
+                                            <div class="input-pair">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
+                                            </div>
+                                            
+                                            <div class="input-pair">
+                                                <button class="circle-btn" (click)="saveValue(tag, 'AI')">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Show the card number text if editing is false -->
+                                    <h2 *ngIf="!editing && tag.id == editId || tag.id != editId" class="card-number">{{ tag.value }}</h2>
+                                    <div class="limit-container">
+                                        <h4 class="card-title" style="color: #4CAF50">Low limit: <span style="color: #FFFFFF;">{{tag.lowLimit}}</span></h4>
+                                        <h4 class="card-title" style="color: #4CAF50">High limit: <span style="color: #FFFFFF;">{{tag.highLimit}}</span></h4>
+                                        </div>
+                                    <h4 class="card-title">Unit: <span style="color: #FFFFFF;">{{tag.units}}</span></h4>
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
+
                                 </div>
                                 
                                 <div class="card-actions">
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
-                                    <button class="action-btn" ><i class="fas fa-pen"></i></button>
-                                    <button class="action-btn"><i class="fas fa-bell"></i></button>
+                                    <!-- <button class="action-btn"><i class="fas fa-bell"></i></button> -->
+                                    <button class="action-btn"   (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id, 'AI')"><i class="fas fa-trash"></i></button>
                                 </div>
                                 
                                 <!-- The toggle switch is now outside of the card-actions div -->
                                 <label class="toggle-switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox"  [checked]="tag.isScanning" (click)="switch(tag.id, 'AI')" (change)="tag.isScanning = !tag.isScanning">
                                     <span class="slider"></span>
                                 </label>
                             </div>
                         </div>
                         
-                        
-                        
-                    </div>
-                </div>
-                <div class="right-column">
-
-                </div>
-            </div>
-
-
-            <div class="context" *ngIf="activeContext === 'dbManager'">
-                <div class="left-column">
-                    <div class="albums">
-                        <div class="card card-with-shadow" style="width: 250px;">
+                        <div class="card card-with-shadow" *ngFor="let tag of digitalInputs" style="width: 250px;">
                             <div class="content-card">
                                 <div class="card-header">
                                     
+                                    <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">DIGITAL</h3>
                                     <h4 class="card-title">Value</h4>
                                     <div *ngIf="editing" class="edit-container">
                                         <div class="input-row-e">
                                             <div class="input-pair">
-                                                <input type="text" [(ngModel)]="cardNumber" class="card-number-input">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
                                             </div>
                                             
                                             <div class="input-pair">
-                                                <button class="circle-btn" (click)="saveValue()">+</button>
+                                                <button class="circle-btn" (click)="saveValue(tag, 'DI')">+</button>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Show the card number text if editing is false -->
-                                    <h2 *ngIf="!editing" class="card-number">{{ cardNumber }}</h2>
-                                    <h4 class="card-title">High limit: <span style="color: #FFFFFF;">1000</span> </h4>
-                                    <h4 class="card-title">Low limit: <span style="color: #FFFFFF;">200</span></h4>
+                                    <h2 *ngIf="!editing" class="card-number">{{ tag.value }}</h2>
+                                    <h4 class="card-title">Id: <span style="color: #FFFFFF;">{{tag.id}}</span> </h4>
+                                    <h4 class="card-title" style="color: #003C39;">Id: </h4>           
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
+                
                                 </div>
                                 
                                 <div class="card-actions">
-                                    <button class="action-btn" (click)="showConfirmation()"><i class="fas fa-trash"></i></button>
-                                    <button class="action-btn" (click)="toggleEdit()"><i class="fas fa-pen"></i></button>
+                                
+                                    <!-- <button class="action-btn"><i class="fas fa-bell"></i></button> -->
+                                    <button class="action-btn" (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id,'DI')" ><i class="fas fa-trash"></i></button>
+                                    
+                                </div>
+                                
+                                <!-- The toggle switch is now outside of the card-actions div -->
+                                <label class="toggle-switch">
+                                    <input type="checkbox"  [checked]="tag.isScanning" (click)="switch(tag.id, 'DI')" (change)="tag.isScanning = !tag.isScanning">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>           
+                    </div>
+                </div>
+            </div>
+
+            <div class="context" *ngIf="activeContext === 'dbManager'">
+                <div class="left-column">
+                    <div class="albums">
+                        <div class="card card-with-shadow" *ngFor="let tag of analogOutputs" style="width: 250px;">
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">ANALOG</h3>
+                                    <h4 class="card-title">Value</h4>
+                                    <div *ngIf="editing" class="edit-container">
+                                        <div class="input-row-e">
+                                            <div class="input-pair">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
+                                            </div>
+                                            
+                                            <div class="input-pair">
+                                                <button class="circle-btn" (click)="saveValue(tag, 'AO')">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Show the card number text if editing is false -->
+                                    <h2 *ngIf="!editing" class="card-number">{{ tag.value }}</h2>
+                                    <div class="limit-container">
+                                        <h4 class="card-title" style="color: #4CAF50">Low limit: <span style="color: #FFFFFF;">{{tag.lowLimit}}</span></h4>
+                                        <h4 class="card-title" style="color: #4CAF50">High limit: <span style="color: #FFFFFF;">{{tag.highLimit}}</span></h4>
+                                        </div>
+                                    <h4 class="card-title">Unit: <span style="color: #FFFFFF;">{{tag.units}}</span></h4>
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
+                                    </div>
+                                
+                                <div class="card-actions">
+                                    <button class="action-btn" style="color: #003C39;"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id, 'AO')"><i class="fas fa-trash"></i></button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-with-shadow" *ngFor="let tag of digitalOutputs" style="width: 250px;">
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="color: #4CAF50; font-weight: bold; font-size: 18px;">DIGITAL</h3>
+                                    <h4 class="card-title">Value</h4>
+                                    <div *ngIf="editing" class="edit-container">
+                                        <div class="input-row-e">
+                                            <div class="input-pair">
+                                                <input type="text" [(ngModel)]="tag.value" class="card-number-input">
+                                            </div>
+                                            
+                                            <div class="input-pair">
+                                                <button class="circle-btn" (click)="saveValue(tag, 'DO')">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Show the card number text if editing is false -->
+                                    <h2 *ngIf="!editing" class="card-number">{{ tag.value }}</h2>
+                                    <h4 class="card-title">Id: <span style="color: #FFFFFF;">{{tag.id}}</span> </h4>
+                                    <h4 class="card-title" style="color: #003C39;">Id: </h4>    
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
+                                </div>
+                                
+                                <div class="card-actions">
+                                    <button class="action-btn" style="color: #003C39;"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="toggleEdit(tag.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="action-btn" (click)="showConfirmation(tag.id, 'DO')"><i class="fas fa-trash"></i></button>
                                     
                                 </div>
                             </div>
                         </div>
                         
-                        
                     </div>
                 </div>
-                <div class="right-column">
+             
+            </div>
+
+            <div class="context" *ngIf="activeContext === 'reports'">
+                <div class="left-column">
+                
+                    <div class="a">
+
+                        <div class="date-picker-container" *ngIf="report == 1 || report == 3">
+                            <div class="date-picker-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="custom-date-picker" id="startDate" name="startDate" #from>
+                            </div>
+                            
+                            <div class="date-picker-group">
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="custom-date-picker" id="endDate" name="endDate" #to>
+                            </div>
+
+                            <button *ngIf="report == 1" class="report-btn btn2"  (click)="getAlarmsPeriod(from.value, to.value)" >SEARCH</button>
+
+                            <button  *ngIf="report == 3" class="report-btn btn2" (click)="getTagsPeriod(from.value, to.value)">SEARCH</button>
+                        </div>
+
+                        <div class="input-row" *ngIf="report == 2" > 
+                            
+                            <div class="date-picker-group fix">
+                                <label for="endDate">Priority</label>
+                                <input type="number" class="custom-date-picker"  name="priority" #pr>
+                            </div>
+                            <button class="report-btn btn2"  (click)="getAlarmsPriority(pr.value)">SEARCH</button>
+                        </div>
+
+                        <div class="input-row" *ngIf="report == 4"> 
+                            <div class="date-picker-group fix">
+                                <label for="endDate">Tag id</label>
+                                <input type="text" class="custom-date-picker"  name="tagId"  #tagId >
+                            </div>
+                            <button class="report-btn btn2" (click)="getTagsId(tagId.value)">SEARCH</button>
+                        </div>
+                
+                    </div>
+                    <div class="table" *ngIf="tagReport.length > 0">
+                        <table class="report-preview-table">
+                            <thead class="sticky-header">
+                                <tr>
+                                    <th (click)="sortColumn('id', tagReport)">TAG ID</th>
+                                    <th (click)="sortColumn('value', tagReport)">VALUE</th>
+                                    <th (click)="sortColumn('time', tagReport)">TIME STAMP</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let element of tagReport">
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>{{element.tagId}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.timeStamp}}</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table" *ngIf="alarmReport.length > 0">
+                        <table class="report-preview-table">
+                            <thead class="sticky-header">
+                                <tr>
+                                    <th (click)="sortColumn('id', alarmReport)">TAG ID</th>
+                                    <th (click)="sortColumn('value', alarmReport)">VALUE</th>
+                                    <th (click)="sortColumn('limit', alarmReport)">LIMIT</th>
+                                    <th (click)="sortColumn('priority', alarmReport)">PRIOTITY</th>
+                                    <th (click)="sortColumn('time2', alarmReport)">TIME STAMP</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let element of alarmReport">
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>{{element.analogInputId}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.limit}}</td>
+                                    <td>{{element.priority}}</td>
+                                    <td>{{element.timeStamp}}</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table" *ngIf="tagAIReport.length > 0">
+                        <table class="report-preview-table">
+                            <thead class="sticky-header">
+                                <tr>
+                                    <th (click)="sortColumn('id', tagAIReport)">TAG ID</th>
+                                    <th (click)="sortColumn('value', tagAIReport)">VALUE</th>
+                                    <th (click)="sortColumn('time', tagAIReport)">SCAN TIME</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let element of tagAIReport">
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>{{element.id}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.scanTime}}</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table" *ngIf="tagDIReport.length > 0">
+                        <table class="report-preview-table">
+                            <thead class="sticky-header">
+                                <tr>
+                                    <th  (click)="sortColumn('id', tagDIReport)"  >TAG ID</th>
+                                    <th (click)="sortColumn('value', tagDIReport)" >VALUE</th>
+                                    <th (click)="sortColumn('time', tagDIReport)" >SCAN TIME</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let element of tagDIReport">
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>{{element.id}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.scanTime}}</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>
+            
+
+
         </div>
     </div>
 </body>

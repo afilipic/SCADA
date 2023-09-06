@@ -1,4 +1,6 @@
-﻿using SCADA_backend.DTO;
+﻿using Microsoft.AspNetCore.SignalR;
+using SCADA_backend.DTO;
+using SCADA_backend.Hubs;
 using SCADA_backend.Model;
 using SCADA_backend.Repository;
 
@@ -6,7 +8,14 @@ namespace SCADA_backend.Service;
 
 public class TagService
 {
-    private AlarmService _alarmService = new AlarmService();
+    
+    private readonly AlarmService _alarmService;
+
+    public TagService(AlarmService alarmService)
+    {
+        _alarmService = alarmService;
+    }
+
     
     // DIGITAL OUTPUT
 
@@ -22,8 +31,15 @@ public class TagService
             throw new ArgumentException("TagName already in use!");
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
+        tagInfo.InitialValue = tagInfo.InitialValue > 0.5 ? 1 : 0;
         tagInfo.Value = tagInfo.InitialValue;
+
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveDO(tagInfo);
+        TagRepository.AddLog(tagLog);
     }
     
     public  void EditDO(string id, double value)
@@ -34,7 +50,13 @@ public class TagService
         
         DigitalOutput digitalTag = (DigitalOutput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, digitalTag.Id, DateTime.Now, digitalTag.Value);
+        
         TagRepository.ChangeDO(digitalTag);
+        TagRepository.AddLog(tagLog);
 
     }
     public  void DeleteDO(string id)
@@ -63,7 +85,14 @@ public class TagService
             throw new ArgumentException("TagName already in use!");
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
+        tagInfo.Value = tagInfo.Value > 0.5 ? 1 : 0;
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveDI(tagInfo);
+        TagRepository.AddLog(tagLog);
+
     }
     
     public  void EditDI(string id, double value)
@@ -76,7 +105,13 @@ public class TagService
         DigitalInput digitalTag = (DigitalInput)tag;
         digitalTag.Value = value > 0.5 ? 1 : 0;
         digitalTag.ScanTime = DateTime.Now;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, digitalTag.Id, digitalTag.ScanTime, digitalTag.Value);
+        
         TagRepository.ChangeDI(digitalTag);
+        TagRepository.AddLog(tagLog);
 
     }
     
@@ -119,7 +154,13 @@ public class TagService
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
         tagInfo.Value = tagInfo.InitialValue;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveAO(tagInfo);
+        TagRepository.AddLog(tagLog);
     }
     
     public  void EditAO(string id,double value)
@@ -130,7 +171,13 @@ public class TagService
         
         AnalogOutput analogTag = (AnalogOutput)tag;
         analogTag.Value = value;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, analogTag.Id, DateTime.Now, analogTag.Value);
+        
         TagRepository.ChangeAO(analogTag);
+        TagRepository.AddLog(tagLog);
 
     }
     public  void DeleteAO(string id)
@@ -155,7 +202,13 @@ public class TagService
             throw new ArgumentException("TagName already in use!");
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
+        
         TagRepository.SaveAI(tagInfo);
+        TagRepository.AddLog(tagLog);
     }
     
     public  void EditAI(string id, double value)
@@ -167,7 +220,13 @@ public class TagService
         AnalogInput analogTag = (AnalogInput)tag;
         analogTag.Value = value;
         analogTag.ScanTime = DateTime.Now;
+        
+        Random rand = new Random();
+        int idLog = rand.Next(10000);
+        TagLog tagLog = new TagLog(idLog, analogTag.Id, analogTag.ScanTime, analogTag.Value);
+        
         TagRepository.ChangeAI(analogTag);
+        TagRepository.AddLog(tagLog);
         
         if(value > analogTag.HighLimit || value < analogTag.LowLimit)
         {

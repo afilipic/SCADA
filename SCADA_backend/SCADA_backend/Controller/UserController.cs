@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SCADA_backend.DTO;
 using SCADA_backend.Service;
@@ -7,6 +8,7 @@ namespace SCADA_backend.Controller
 {
     [ApiController]
     [Route("user")]
+    [EnableCors]
     public class UserController : ControllerBase
     {
 

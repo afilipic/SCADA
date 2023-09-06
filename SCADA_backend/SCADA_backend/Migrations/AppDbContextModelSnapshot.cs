@@ -27,7 +27,7 @@ namespace SCADA_backend.Migrations
 
                     b.Property<string>("AnalogInputId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<double?>("Limit")
                         .HasColumnType("double");
@@ -53,8 +53,6 @@ namespace SCADA_backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnalogInputId");
-
                     b.ToTable("Alarms", (string)null);
                 });
 
@@ -75,6 +73,27 @@ namespace SCADA_backend.Migrations
                     b.ToTable("Tags", (string)null);
 
                     b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("SCADA_backend.Model.TagLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TagLogs", (string)null);
                 });
 
             modelBuilder.Entity("SCADA_backend.Model.User", b =>
@@ -180,15 +199,6 @@ namespace SCADA_backend.Migrations
                     b.ToTable("DigitalOutputs", (string)null);
                 });
 
-            modelBuilder.Entity("SCADA_backend.Model.Alarm", b =>
-                {
-                    b.HasOne("SCADA_backend.Model.AnalogInput", null)
-                        .WithMany("Alarms")
-                        .HasForeignKey("AnalogInputId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SCADA_backend.Model.AnalogInput", b =>
                 {
                     b.HasOne("SCADA_backend.Model.Tag", null)
@@ -223,11 +233,6 @@ namespace SCADA_backend.Migrations
                         .HasForeignKey("SCADA_backend.Model.DigitalOutput", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SCADA_backend.Model.AnalogInput", b =>
-                {
-                    b.Navigation("Alarms");
                 });
 #pragma warning restore 612, 618
         }
