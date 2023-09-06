@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { AITag, AOTag, DITag, DOTag, Tag } from '../models/Tag';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -9,18 +10,21 @@ import { AITag, AOTag, DITag, DOTag, Tag } from '../models/Tag';
 })
 export class HomeComponent implements AfterViewInit {
 
+  createTag = 'ANALOG';
+  createTag2 = 'INPUT'
 
-  tagsList! : Tag[];
-  value = ''; // Sample initial value, fetch from backend or set appropriately
-  cardNumber: string = '70 345'; // Default value, you can get this from your API or elsewhere
-  highLimit = '';
-  lowLimit = '';
-  driver = '';
-  idTag = '';
+  // tagsList! : Tag[];
+  // value = ''; // Sample initial value, fetch from backend or set appropriately
+  // cardNumber: string = '70 345'; // Default value, you can get this from your API or elsewhere
+  // highLimit = '';
+  // lowLimit = '';
+  // driver = '';
+  // units = ''
 
 
   editing: boolean = false;
   editId : string = "";
+  idTag = '';
   deleteType : string = "";
 
   analogInputs!: AITag[]
@@ -33,56 +37,26 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('editModal', { static: false }) editModal!: ElementRef;
   @ViewChild('confirmationModal', { static: false }) confirmationModal!: ElementRef;
  
-  
+  newTag!: FormGroup;
 
   constructor(private elRef: ElementRef, private tagService : TagService) {} 
 
-  ngAfterViewInit(): void {
-    // This will ensure the modal element is available after view initialization.
-    console.log(this.confirmationModal);
 
- 
-  
-      this.tagService.getAllAI().subscribe({
-        next: (result) => {
-          this.analogInputs = result
-          console.log(this.analogInputs[0])
-        },
-        error:(error) => {
-          console.log(error)
-        }
-      })
-
-      this.tagService.getAllDI().subscribe({
-        next: (result) => {
-          this.digitalInputs = result
-          console.log(this.analogInputs[0])
-        },
-        error:(error) => {
-          console.log(error)
-        }
-      })
-
-      this.tagService.getAllAO().subscribe({
-        next: (result) => {
-          this.analogOutputs = result
-          console.log(this.analogInputs[0])
-        },
-        error:(error) => {
-          console.log(error)
-        }
-      })
-      this.tagService.getAllDO().subscribe({
-        next: (result) => {
-          this.digitalOutputs = result
-          console.log(this.analogInputs[0])
-        },
-        error:(error) => {
-          console.log(error)
-        }
-      })
-
+  ngOnInit(): void{
     
+    this.newTag = new FormGroup({
+      id: new FormControl(''),
+      address: new FormControl(''),
+      description : new FormControl(''),
+      value: new FormControl(''),
+      units: new FormControl(''),
+      lowLimit : new FormControl(''),
+      highLimit : new FormControl(''),
+    });
+  }
+  ngAfterViewInit(): void {  
+      this.getTags();
+
 
      // Get all the buttons
      const buttons = this.elRef.nativeElement.querySelectorAll('.menu-button');
@@ -98,6 +72,47 @@ export class HomeComponent implements AfterViewInit {
        });
      });
   }
+
+
+  getTags(){
+    this.tagService.getAllAI().subscribe({
+      next: (result) => {
+        this.analogInputs = result
+      },
+      error:(error) => {
+        console.log(error)
+      }
+    })
+
+    this.tagService.getAllDI().subscribe({
+      next: (result) => {
+        this.digitalInputs = result
+        console.log(this.analogInputs[0])
+      },
+      error:(error) => {
+        console.log(error)
+      }
+    })
+
+    this.tagService.getAllAO().subscribe({
+      next: (result) => {
+        this.analogOutputs = result
+      },
+      error:(error) => {
+        console.log(error)
+      }
+    })
+    this.tagService.getAllDO().subscribe({
+      next: (result) => {
+        this.digitalOutputs = result
+      },
+      error:(error) => {
+        console.log(error)
+      }
+    })
+  }
+
+
   toggleEdit(id : string): void {
     this.editing = !this.editing;
     this.editId = id;
@@ -135,7 +150,6 @@ saveValue(tag:Tag, type : string): void {
   }
 
   confirmDelete(idTag:string): void {
-    console.log("Item deleted!");
     this.confirmationModal.nativeElement.style.display = 'none';
    
       this.tagService.deleteTag(idTag, this.deleteType).subscribe(response => {
@@ -160,12 +174,32 @@ saveValue(tag:Tag, type : string): void {
     this.editModal.nativeElement.style.display = 'none';
   }
 
-  edit(): void {
-    // Logic to edit the data.
-    // If you're making an API call to update the data, do it here.
-    console.log('Edited value:', this.value, this.highLimit, this.lowLimit);
+  create(): void {
 
+    const tag: AITag  = this.newTag.value;
+
+    if(this.createTag == 'ANALOG' && this.createTag2 == 'INPUT'){
+      this.createAI(tag)
+    }
+    if(this.createTag == 'ANALOG' && this.createTag2 == 'OUTPUT'){
+      this.createAO(tag)
+    }
+    if(this.createTag == 'DIGITAL' && this.createTag2 == 'INPUT'){
+      this.createDI(tag)
+    }
+    if(this.createTag == 'DIGITAL' && this.createTag2 == 'OUTPUT'){
+      this.createDO(tag)
+    }
     this.hideEditForm();
+  }
+
+  createTagType(type : string){
+    this.createTag = type;
+
+  }
+
+  createTagType2(type : string){
+    this.createTag2 = type;
   }
 
   switch (id : string, type: string) {
@@ -175,4 +209,80 @@ saveValue(tag:Tag, type : string): void {
     console.error('Error:', error);
   });
   }
+
+
+  createDI(tag : AITag){
+
+    var newTag : DITag ={
+      driverType: 0,
+      scanTime: new Date,
+      isScanning: true,
+      id: tag.id,
+      description: tag.description,
+      address: tag.address,
+      value: tag.value
+    }
+    console.log(newTag)
+    this.tagService.addDI(newTag).subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+  createAI(tag : AITag){
+
+    tag.isScanning = true;
+    tag.scanTime = new Date;
+    tag.driverType = 0;
+    console.log(tag)
+    this.tagService.addAI(tag).subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+  createDO(tag : AITag){
+
+
+    var newTag : DOTag ={
+      initialValue: tag.value,
+      id: tag.id,
+      description: tag.description,
+      address: tag.address,
+      value: tag.value
+    }
+    console.log(newTag)
+    this.tagService.addDO(newTag).subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+  createAO(tag : AITag){
+
+    var newTag : AOTag ={
+      lowLimit: tag.lowLimit,
+      highLimit: tag.highLimit,
+      units: tag.units,
+      initialValue: tag.value,
+      id: tag.id,
+      description: tag.description,
+      address: tag.address,
+      value: tag.value
+    }
+    console.log(newTag)
+
+     
+  this.tagService.addAO(newTag).subscribe(response => {
+    console.log('Successfully', response);
+  }, error => {
+    console.error('Error:', error);
+  });
+
+  }
+
+
 }

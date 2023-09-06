@@ -201,11 +201,11 @@ public class TagRepository
         dbContext.Entry(tag).Property(x => x.isScanning).IsModified = true;
         dbContext.SaveChanges();
     }
-    public static void AddAlarmAI(AnalogInput tag)
-    {
-        AppDbContext dbContext = new AppDbContext();
-        dbContext.AnalogInputs.Attach(tag);
-        dbContext.Entry(tag).Property(x => x.Alarms).IsModified = true;
-        dbContext.SaveChanges();
-    }
+    // public static void AddAlarmAI(AnalogInput tag)
+    // {
+    //     AppDbContext dbContext = new AppDbContext();
+    //     dbContext.AnalogInputs.Attach(tag);
+    //     dbContext.Entry(tag).Property(x => x.Alarms).IsModified = true;
+    //     dbContext.SaveChanges();
+    // }
 }

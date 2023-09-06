@@ -226,7 +226,7 @@ body {
   }
   .albums {
     display: flex;
-    flex-wrap: wrap; /* Distributes the cards evenly within the container */
+    /* flex-wrap: wrap; Distributes the cards evenly within the container */
     overflow-y: scroll; /* This will make the div scrollable */
     gap: 20px; /* Spacing between the cards */
     -ms-overflow-style: none;  /* IE and Edge */
@@ -476,6 +476,39 @@ input:checked + .slider:before {
 }
 
 
+.create-button {
+  background-color: #888; /* Example color */
+  color: white;
+  width: 50%;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transition for a smoother color change */
+}
+.create-button-checked {
+  background-color: #c1e166; /* Example color */
+  color: white;
+  width: 50%;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transition for a smoother color change */
+}
+.create-button:hover {
+  background-color: #9cb84f; /* Darker shade of the original color */
+}
+
+
 .modal {
   display: none;  /* initially hidden */
   position: fixed; /* Stay in place */
@@ -631,6 +664,7 @@ input:checked + .slider:before {
 .modal-button-edit:hover {
   background-color: #9cb84f;
 }
+
 
 .input-row {
   display:flex;

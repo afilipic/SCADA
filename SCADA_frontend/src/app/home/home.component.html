@@ -11,55 +11,86 @@
     <div #editModal class="modal-edit">
         <div class="modal-content-edit">
             <h2 class="editFormTitle">Add Tag</h2>
+
+            <div class="input-row">
+                <button class="create-button" [class.create-button-checked]="createTag=='DIGITAL'" (click)="createTagType('DIGITAL')"> Digital </button>
+                <button class="create-button" [class.create-button-checked]="createTag=='ANALOG'" (click)="createTagType('ANALOG')"> Analog </button>
+            </div>
+            <hr>
+
+            <form [formGroup]="newTag" action="#">
+
             <div class="input-row">
                 <div class="input-pair">
-                    <label for="lowLimit">Low limit:</label>
-                    <input type="text" id="lowLimit" [(ngModel)]="lowLimit">
-                </div>
-                
+                    <label for="id">Name (Id):</label>
+                    <input type="text" id="id" formControlName="id">
+                </div>  
                 <div class="input-pair">
-                    <label for="highLimit"></label>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" formControlName="address">
                 </div>
             </div>
-            <label for="value">Value:</label>
-            <input type="text" id="value" [(ngModel)]="value">
-            
+
+            <div class="input-pair">
+                <label for="description">Description:</label>
+                <input type="text" id="description" formControlName="description"> 
+            </div>
+
+            <div *ngIf="createTag == 'DIGITAL'" >
+                    <div class="input-pair">
+                    <label for="value">Value:</label>
+                    <input type="text" id="value" formControlName="value">
+                </div>
+
+            </div>
+
+
+            <div *ngIf="createTag == 'ANALOG'" >
+                <div class="input-row">
+                    <div class="input-pair">
+                        <label for="value">Value:</label>
+                        <input type="text" id="value" formControlName="value">
+                    </div>  
+                    <div class="input-pair">
+                        <label for="units">Units:</label>
+                        <input type="text" id="units" formControlName="units">
+                    </div>
+                </div>
+
             <div class="input-row">
                 <div class="input-pair">
                     <label for="lowLimit">Low limit:</label>
-                    <input type="text" id="lowLimit" [(ngModel)]="lowLimit">
-                </div>
-                
+                    <input type="text" id="lowLimit" formControlName="lowLimit">
+                </div>  
                 <div class="input-pair">
                     <label for="highLimit">High limit:</label>
-                    <input type="text" id="highLimit" [(ngModel)]="highLimit">
+                    <input type="text" id="highLimit" formControlName="highLimit" >
                 </div>
             </div>
         
-            
+            </div>
             <div class="modal-buttons-edit">
-                <button class="modal-button-edit" (click)="edit()">Edit</button>
+                <button class="modal-button-edit" (click)="create()">Create Tag</button>
                 <button class="modal-button-edit" id="cancel" (click)="hideEditForm()">Cancel</button>
             </div>
+        </form>
+
         </div>
+
     </div>
     
     <div id="menu">
         <!-- Menu Content Goes Here -->
         <h2 class="titleS">SCADA Sys</h2>
         <div id="buttons">
-            <button class="menu-button" [ngClass]="{'active': activeContext === 'trending'}" (click)="showContext('trending')">
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'trending'}" (click)="showContext('trending')" (click)="createTagType2('INPUT')">
                 <span class="button-icon">
                     <i class="fas fa-clipboard ic"></i>
                 </span>
                 <span class="button-text">Trending</span>
             </button>
             
-            <button class="menu-button" [ngClass]="{'active': activeContext === 'dbManager'}" (click)="showContext('dbManager')">
+            <button class="menu-button" [ngClass]="{'active': activeContext === 'dbManager'}" (click)="showContext('dbManager')" (click)="createTagType2('OUTPUT')">
                 <span class="button-icon">
                     <i class="fas fa-clipboard ic"></i>
                 </span>
@@ -122,7 +153,8 @@
                                         <h4 class="card-title" style="color: #4CAF50">High limit: <span style="color: #FFFFFF;">{{tag.highLimit}}</span></h4>
                                         </div>
                                     <h4 class="card-title">Unit: <span style="color: #FFFFFF;">{{tag.units}}</span></h4>
-                                    
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
+
                                 </div>
                                 
                                 <div class="card-actions">
@@ -159,7 +191,9 @@
                                     <!-- Show the card number text if editing is false -->
                                     <h2 *ngIf="!editing" class="card-number">{{ tag.value }}</h2>
                                     <h4 class="card-title">Id: <span style="color: #FFFFFF;">{{tag.id}}</span> </h4>
-                                    <h4 class="card-title" style="color: #003C39;">Id: </h4>                           
+                                    <h4 class="card-title" style="color: #003C39;">Id: </h4>           
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
+                
                                 </div>
                                 
                                 <div class="card-actions">
@@ -207,6 +241,7 @@
                                         <h4 class="card-title" style="color: #4CAF50">High limit: <span style="color: #FFFFFF;">{{tag.highLimit}}</span></h4>
                                         </div>
                                     <h4 class="card-title">Unit: <span style="color: #FFFFFF;">{{tag.units}}</span></h4>
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
                                     </div>
                                 
                                 <div class="card-actions">
@@ -238,6 +273,7 @@
                                     <h2 *ngIf="!editing" class="card-number">{{ tag.value }}</h2>
                                     <h4 class="card-title">Id: <span style="color: #FFFFFF;">{{tag.id}}</span> </h4>
                                     <h4 class="card-title" style="color: #003C39;">Id: </h4>    
+                                    <h4 class="card-title">Description: <span style="color: #FFFFFF;">{{tag.description}}</span></h4>
                                 </div>
                                 
                                 <div class="card-actions">

@@ -10,7 +10,7 @@ public class AnalogInput : Tag
     public bool isScanning { get; set; }
     public double Value { get; set; }
     
-    public ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
+    // public ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 
     public AnalogInput() {}
 
@@ -26,12 +26,12 @@ public class AnalogInput : Tag
         ScanTime = scanTime;
         this.isScanning = isScanning;
         Value = value;
-        Alarms = new List<Alarm>();
+        // Alarms = new List<Alarm>();
 
     }
 
-    public void AddAlarm(Alarm alarm)
-    {
-        Alarms.Add(alarm);
-    }
+    // public void AddAlarm(Alarm alarm)
+    // {
+    //     Alarms.Add(alarm);
+    // }
 }
