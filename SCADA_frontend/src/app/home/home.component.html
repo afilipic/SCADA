@@ -1,4 +1,19 @@
 <body>
+    <div id="alert-container" class="alert-container">
+        <div *ngFor="let alarm of alarms" class="alert">
+        <h2 class="editFormTitle" style="color: #fc1f29;"> ALARM FOR {{alarm.analogInputId}} </h2>
+        <hr>
+        <div class="input-row ">
+            <div class="input-pair alarm-input">
+                <label>Limit: <span style="color: #fc1f29;"> {{alarm.limit}}</span> </label>
+            </div>  
+            <div class="input-pair alarm-input">
+                <label>Value:<span style="color: #fc1f29;"> {{alarm.value}}</span> </label>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <div #confirmationModal class="modal">
             <div class="modal-content">
                 <p>Are you sure you want to delete?</p>

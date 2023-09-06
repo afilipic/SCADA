@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using SCADA_backend.DTO;
+using SCADA_backend.Hubs;
 using SCADA_backend.Model;
 using SCADA_backend.Service;
 
@@ -13,10 +15,12 @@ public class TagController : ControllerBase
 {
 
     private readonly TagService _tagService;
+    private readonly IHubContext<TagHub> _tagContext;
 
-    public TagController(TagService tagService)
+    public TagController(TagService tagService,  IHubContext<TagHub> hubContext)
     {
         _tagService = tagService;
+        _tagContext = hubContext;
     }
 
     // DIGITAL OUTPUT
@@ -36,6 +40,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.AddDO(tagInfo);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Digital output tag successfully added!");
         }
         catch (ArgumentException ex)
@@ -52,6 +58,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.EditDO(id, value);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Output tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -67,6 +75,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.DeleteDO(id);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Tag successfully deleted!");
         }
         catch (ArgumentException ex)
@@ -99,6 +109,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.EditDI(id, value);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Successfully updated digital input value!");
         }
         catch (ArgumentException ex)
@@ -114,6 +126,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.AddDI(tagInfo);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Digital output tag successfully added!");
         }
         catch (ArgumentException ex)
@@ -130,6 +144,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.EditDI(id, value);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -159,6 +175,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.DeleteDI(id);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Tag successfully deleted!");
         }
         catch (ArgumentException ex)
@@ -183,6 +201,7 @@ public class TagController : ControllerBase
         try
         {
             _tagService.AddAO(tagInfo);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
             return Ok("Analog output tag successfully added!");
         }
         catch (ArgumentException ex)
@@ -199,6 +218,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.EditAO(id, value);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Analog output tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -215,6 +236,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.DeleteAO(id);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Tag successfully deleted!");
         }
         catch (ArgumentException ex)
@@ -240,6 +263,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.EditAI(id, value);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Successfully updated analog input value!");
         }
         catch (ArgumentException ex)
@@ -263,6 +288,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.AddAI(tagInfo);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Analog input tag successfully added!");
         }
         catch (ArgumentException ex)
@@ -279,6 +306,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.EditAI(id, value);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Input tag value successfully changed!");
         }
         catch (ArgumentException ex)
@@ -308,6 +337,8 @@ public class TagController : ControllerBase
         try
         {
             _tagService.DeleteAI(id);
+            _tagContext.Clients.All.SendAsync("ReceiveTag", "tags");
+
             return Ok("Tag successfully deleted!");
         }
         catch (ArgumentException ex)

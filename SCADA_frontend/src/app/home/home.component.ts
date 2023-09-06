@@ -4,6 +4,7 @@ import { AITag, AOTag, DITag, DOTag, Tag } from '../models/Tag';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReportService } from '../services/report.service';
 import { Period } from '../models/Period';
+import { Alarm } from '../models/Alarm';
 
 @Component({
   selector: 'app-home',
@@ -14,20 +15,12 @@ export class HomeComponent implements AfterViewInit {
 
   createTag = 'ANALOG';
   createTag2 = 'INPUT'
-
-  // tagsList! : Tag[];
-  // value = ''; // Sample initial value, fetch from backend or set appropriately
-  // cardNumber: string = '70 345'; // Default value, you can get this from your API or elsewhere
-  // highLimit = '';
-  // lowLimit = '';
-  // driver = '';
-  // units = ''
-
-
   editing: boolean = false;
   editId : string = "";
   idTag = '';
   deleteType : string = "";
+
+  alarms : Alarm[] = [];
 
   analogInputs!: AITag[]
   digitalInputs!: DITag[]
@@ -45,7 +38,25 @@ export class HomeComponent implements AfterViewInit {
 
 
   ngOnInit(): void{
-    
+
+    this.tagService.startConnection()
+
+    this.tagService.addReceiveTagListener((message: string) => {
+        this.getTags();
+    });
+
+    this.tagService.addReceiveAlarmListener((message: Alarm) => {
+
+
+      this.alarms.push(message)
+      setTimeout(() => {
+        // Clear the alarms array after 5 seconds
+        this.alarms = [];
+      }, 5000); // 5000 milliseconds = 5 seconds
+
+  });
+  
+
     this.newTag = new FormGroup({
       id: new FormControl(''),
       address: new FormControl(''),
@@ -89,7 +100,6 @@ export class HomeComponent implements AfterViewInit {
     this.tagService.getAllDI().subscribe({
       next: (result) => {
         this.digitalInputs = result
-        console.log(this.analogInputs[0])
       },
       error:(error) => {
         console.log(error)
@@ -125,7 +135,6 @@ saveValue(tag:Tag, type : string): void {
 
  
   this.tagService.editTag(tag.id, tag.value, type).subscribe(response => {
-    console.log('Successfully', response);
   }, error => {
     console.error('Error:', error);
   });

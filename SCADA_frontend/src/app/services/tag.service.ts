@@ -2,11 +2,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AITag, AOTag, DITag, DOTag } from '../models/Tag';
 import { Observable } from 'rxjs';
+import { HubConnection} from '@microsoft/signalr'
+import { HubConnectionBuilder} from '@microsoft/signalr'
+import { HomeComponent } from '../home/home.component';
+import * as signalR from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
+
+  private tagConnection? : HubConnection;
+  private alarmConnection? : HubConnection;
 
   constructor(private http : HttpClient) { }
   
@@ -18,8 +25,55 @@ export class TagService {
   httpRoot = 'http://localhost:5001/tags/'
 
 
+  startConnection(){
+    this.tagConnection = new HubConnectionBuilder()
+    .withUrl('http://localhost:5001/tag', {
+      skipNegotiation: true,
+      transport : signalR.HttpTransportType.WebSockets
+    }).withAutomaticReconnect().build()
 
-  editTag(id : string, value: number, type : string): Observable<any> {
+
+    this.tagConnection.start().then(() =>{
+      console.log("Tag connection started")
+    }).catch(err => console.log ("Error: " + err))
+
+
+    this.alarmConnection = new HubConnectionBuilder()
+    .withUrl('http://localhost:5001/alarms', {
+      skipNegotiation: true,
+      transport : signalR.HttpTransportType.WebSockets
+    }).withAutomaticReconnect().build()
+
+
+    this.alarmConnection.start().then(() =>{
+      console.log("Alarm connection started")
+    }).catch(err => console.log ("Error: " + err))
+
+
+
+
+
+  }
+
+  stopConnection(){
+    this.tagConnection?.stop().catch(error => console.log(error));
+  }
+
+  addReceiveTagListener(callback: (message: string) => void) {
+    this.tagConnection?.on("ReceiveTag", (message: string) => {
+      callback(message);
+    });
+  }
+
+  addReceiveAlarmListener(callback: (message: any) => void) {
+    this.alarmConnection?.on("ReceiveAlarm", (message: any) => {
+      callback(message);
+    });
+  }
+
+
+
+  editTag(id : string, value: number, type : string): Observable<String> {
     return this.http.put<any>(this.httpRoot + type +'/' + id + "/" + value, null, {headers: this.headers});
   
   }

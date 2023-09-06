@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.SignalR;
 using SCADA_backend.DTO;
+using SCADA_backend.Hubs;
 using SCADA_backend.Model;
 using SCADA_backend.Repository;
 
@@ -6,6 +8,14 @@ namespace SCADA_backend.Service;
 
 public class AlarmService
 {
+    
+    private readonly IHubContext<AlarmHub> _alarmContext;
+
+    public AlarmService(IHubContext<AlarmHub> hubContext)
+    {
+        _alarmContext = hubContext;
+    }
+
     public  List<Alarm> GetAll()
     {
         return AlarmRepository.GetAll();
@@ -36,7 +46,8 @@ public class AlarmService
         
         for (int i = 0; i < alarm.Priority; i++)
         {
-            //posalji na front notifikaciju 
+            _alarmContext.Clients.All.SendAsync("ReceiveAlarm", alarm);
+
         }
 
     }

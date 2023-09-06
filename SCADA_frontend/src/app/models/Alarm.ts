@@ -1,12 +1,12 @@
 export interface Alarm{
-    Id : number
-    AnalogInputId: string,
-    Type: AlarmType,
-    Priority : number,
-    Limit: number,
-    Value : number,
+    id : number
+    analogInputId: string,
+    type: AlarmType,
+    priority : number,
+    limit: number,
+    value : number,
     isDeleted : boolean,
-    TimeStamp : Date
+    timeStamp : Date
 }
 
 export enum AlarmType{

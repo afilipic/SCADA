@@ -226,7 +226,7 @@ body {
   }
   .albums {
     display: flex;
-    /* flex-wrap: wrap; Distributes the cards evenly within the container */
+    flex-wrap: wrap; /*Distributes the cards evenly within the container*/
     overflow-y: scroll; /* This will make the div scrollable */
     gap: 20px; /* Spacing between the cards */
     -ms-overflow-style: none;  /* IE and Edge */
@@ -823,4 +823,28 @@ input:checked + .slider:before {
   display: flex;
   justify-content: space-between; /* This will put some space between the two headings if there's extra space */
   gap: 45px;
+}
+
+
+.alert-container {
+  width: 30%;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+
+.alert {
+  background-color: #faeced;
+  /* border: 1px solid #fc1f29; */
+  border-left: 4px solid #fc1f29; /* Border on the left side */
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.alarm-input{
+  font-size: 16px;
+
+  color: black;
 }

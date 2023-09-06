@@ -1,4 +1,6 @@
-﻿using SCADA_backend.DTO;
+﻿using Microsoft.AspNetCore.SignalR;
+using SCADA_backend.DTO;
+using SCADA_backend.Hubs;
 using SCADA_backend.Model;
 using SCADA_backend.Repository;
 
@@ -6,7 +8,14 @@ namespace SCADA_backend.Service;
 
 public class TagService
 {
-    private AlarmService _alarmService = new AlarmService();
+    
+    private readonly AlarmService _alarmService;
+
+    public TagService(AlarmService alarmService)
+    {
+        _alarmService = alarmService;
+    }
+
     
     // DIGITAL OUTPUT
 
@@ -22,8 +31,9 @@ public class TagService
             throw new ArgumentException("TagName already in use!");
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
+        tagInfo.InitialValue = tagInfo.InitialValue > 0.5 ? 1 : 0;
         tagInfo.Value = tagInfo.InitialValue;
-        
+
         Random rand = new Random();
         int idLog = rand.Next(10000);
         TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
@@ -75,7 +85,7 @@ public class TagService
             throw new ArgumentException("TagName already in use!");
         if (TagRepository.GetTagByAddress(tagInfo.Address) != null)
             throw new ArgumentException("Address already in use!");
-        
+        tagInfo.Value = tagInfo.Value > 0.5 ? 1 : 0;
         Random rand = new Random();
         int idLog = rand.Next(10000);
         TagLog tagLog = new TagLog(idLog, tagInfo.Id, DateTime.Now, tagInfo.Value);
