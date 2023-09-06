@@ -2,6 +2,8 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { AITag, AOTag, DITag, DOTag, Tag } from '../models/Tag';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ReportService } from '../services/report.service';
+import { Period } from '../models/Period';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +41,7 @@ export class HomeComponent implements AfterViewInit {
  
   newTag!: FormGroup;
 
-  constructor(private elRef: ElementRef, private tagService : TagService) {} 
+  constructor(private elRef: ElementRef, private tagService : TagService, private reportService : ReportService) {} 
 
 
   ngOnInit(): void{
@@ -284,5 +286,67 @@ saveValue(tag:Tag, type : string): void {
 
   }
 
+
+
+
+  getAlarmsPeriod(){
+    var period : Period ={
+      from : new Date,
+      to : new Date,
+    }
+    this.reportService.getAlarmPeriod(period).subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+  getAlarmsPriority(){
+    var priority = 2;
+    this.reportService.getAlarmPriority(priority).subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+  getTagsPeriod(){
+    var period : Period ={
+      from : new Date,
+      to : new Date,
+    }
+    this.reportService.getAllValuesByPeriod(period).subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+  getTagsId(){
+    var tagId = 'DI1'
+    this.reportService.getAllValuesByTagId(tagId).subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+
+  getTagsAI(){
+    this.reportService.getLastAIValues().subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
+  getTagsDI(){
+    var tagId = 'DI1'
+    this.reportService.getLastDIValues().subscribe(response => {
+      console.log('Successfully', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
 
 }

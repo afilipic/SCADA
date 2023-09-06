@@ -10,7 +10,7 @@ namespace SCADA_backend.Controller;
 public class ReportController : ControllerBase
 {
     // alarmi u odredjenom periodu
-    [HttpGet]
+    [HttpPost]
     [Route("alarms/period")]
     public IActionResult GetAlarmsByPeriod([FromBody] Period period)
     {
@@ -45,7 +45,7 @@ public class ReportController : ControllerBase
     }
     
     // sve vrednosti svih tagova u odredjenom periodu
-    [HttpGet]
+    [HttpPost]
     [Route("tags/period")]
     public IActionResult GetAllByPeriod([FromBody] Period period)
     {
