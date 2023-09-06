@@ -137,6 +137,14 @@
         <div class="mainm">
             <div class="title-container">
                 <div id="title">{{ title }}</div>
+                <div class="input-row" *ngIf="activeContext === 'reports'">
+                    <button class="report-btn" [class.report-btn-checked]="report==1" (click)="showReport(1)"> Alarms by period </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==2" (click)="showReport(2)"> Alarm by priority </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==3" (click)="showReport(3)"> Tags by period </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==4" (click)="showReport(4)"> Tags by id </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==5" (click)="showReport(5)"> Current digital inputs </button>
+                    <button class="report-btn" [class.report-btn-checked]="report==6" (click)="showReport(6)"> Current analog inputs </button>
+                </div>
                 <button class="circle-btn" *ngIf="activeContext === 'trending' || activeContext === 'dbManager' " (click)="showCreateForm()">+</button>
             </div>
             
@@ -302,49 +310,133 @@
                         
                     </div>
                 </div>
-                <div class="right-column">
-
-                </div>
+             
             </div>
 
             <div class="context" *ngIf="activeContext === 'reports'">
                 <div class="left-column">
+                
                     <div class="a">
 
-                        <div class="date-picker-container">
+                        <div class="date-picker-container" *ngIf="report == 1 || report == 3">
                             <div class="date-picker-group">
                                 <label for="startDate">Start Date</label>
-                                <input type="date" class="custom-date-picker" id="startDate" name="startDate">
+                                <input type="date" class="custom-date-picker" id="startDate" name="startDate" #from>
                             </div>
                             
                             <div class="date-picker-group">
                                 <label for="endDate">End Date</label>
-                                <input type="date" class="custom-date-picker" id="endDate" name="endDate">
+                                <input type="date" class="custom-date-picker" id="endDate" name="endDate" #to>
                             </div>
+
+                            <button *ngIf="report == 1" class="report-btn btn2"  (click)="getAlarmsPeriod(from.value, to.value)" >SEARCH</button>
+
+                            <button  *ngIf="report == 3" class="report-btn btn2" (click)="getTagsPeriod(from.value, to.value)">SEARCH</button>
                         </div>
-            
+
+                        <div class="input-row" *ngIf="report == 2" > 
+                            
+                            <div class="date-picker-group fix">
+                                <label for="endDate">Priority</label>
+                                <input type="number" class="custom-date-picker"  name="priority" #pr>
+                            </div>
+                            <button class="report-btn btn2"  (click)="getAlarmsPriority(pr.value)">SEARCH</button>
+                        </div>
+
+                        <div class="input-row" *ngIf="report == 4"> 
+                            <div class="date-picker-group fix">
+                                <label for="endDate">Tag id</label>
+                                <input type="text" class="custom-date-picker"  name="tagId"  #tagId >
+                            </div>
+                            <button class="report-btn btn2" (click)="getTagsId(tagId.value)">SEARCH</button>
+                        </div>
                 
                     </div>
-                    <div class="table">
+                    <div class="table" *ngIf="tagReport.length > 0">
                         <table class="report-preview-table">
-                            <thead>
+                            <thead class="sticky-header">
                                 <tr>
-                                    <th>Header 1</th>
-                                    <th>Header 2</th>
-                                    <th>Header 3</th>
+                                    <th (click)="sortColumn('id', tagReport)">TAG ID</th>
+                                    <th (click)="sortColumn('value', tagReport)">VALUE</th>
+                                    <th (click)="sortColumn('time', tagReport)">TIME STAMP</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody *ngFor="let element of tagReport">
                                 <!-- Add your rows here -->
                                 <tr>
-                                    <td>Data 1</td>
-                                    <td>Data 2</td>
-                                    <td>Data 3</td>
+                                    <td>{{element.tagId}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.timeStamp}}</td>
                                 </tr>
                                 <!-- Repeat rows as needed -->
                             </tbody>
                         </table>
                     </div>
+                    <div class="table" *ngIf="alarmReport.length > 0">
+                        <table class="report-preview-table">
+                            <thead class="sticky-header">
+                                <tr>
+                                    <th (click)="sortColumn('id', alarmReport)">TAG ID</th>
+                                    <th (click)="sortColumn('value', alarmReport)">VALUE</th>
+                                    <th (click)="sortColumn('limit', alarmReport)">LIMIT</th>
+                                    <th (click)="sortColumn('priority', alarmReport)">PRIOTITY</th>
+                                    <th (click)="sortColumn('time2', alarmReport)">TIME STAMP</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let element of alarmReport">
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>{{element.analogInputId}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.limit}}</td>
+                                    <td>{{element.priority}}</td>
+                                    <td>{{element.timeStamp}}</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table" *ngIf="tagAIReport.length > 0">
+                        <table class="report-preview-table">
+                            <thead class="sticky-header">
+                                <tr>
+                                    <th (click)="sortColumn('id', tagAIReport)">TAG ID</th>
+                                    <th (click)="sortColumn('value', tagAIReport)">VALUE</th>
+                                    <th (click)="sortColumn('time', tagAIReport)">SCAN TIME</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let element of tagAIReport">
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>{{element.id}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.scanTime}}</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table" *ngIf="tagDIReport.length > 0">
+                        <table class="report-preview-table">
+                            <thead class="sticky-header">
+                                <tr>
+                                    <th  (click)="sortColumn('id', tagDIReport)"  >TAG ID</th>
+                                    <th (click)="sortColumn('value', tagDIReport)" >VALUE</th>
+                                    <th (click)="sortColumn('time', tagDIReport)" >SCAN TIME</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let element of tagDIReport">
+                                <!-- Add your rows here -->
+                                <tr>
+                                    <td>{{element.id}}</td>
+                                    <td>{{element.value}}</td>
+                                    <td>{{element.scanTime}}</td>
+                                </tr>
+                                <!-- Repeat rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
             

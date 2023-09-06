@@ -24,8 +24,8 @@ export class ReportService {
 
   }
 
-  getAlarmPriority(p : number) : Observable<any>{
-    return this.http.get<any>(this.httpRoot + 'alarms/' + p, {headers: this.headers});
+  getAlarmPriority(p : string) : Observable<any>{
+    return this.http.get<any>(this.httpRoot + 'alarms/priority/' + p, {headers: this.headers});
 
   }
 

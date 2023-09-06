@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TagService } from '../services/tag.service';
-import { AITag, AOTag, DITag, DOTag, Tag } from '../models/Tag';
+import { AITag, AOTag, DITag, DOTag, Tag, TagLog } from '../models/Tag';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReportService } from '../services/report.service';
 import { Period } from '../models/Period';
@@ -20,7 +20,14 @@ export class HomeComponent implements AfterViewInit {
   idTag = '';
   deleteType : string = "";
 
+  report = 1;
+
   alarms : Alarm[] = [];
+
+  alarmReport : Alarm[] =[];
+  tagReport : TagLog[] = [];
+  tagAIReport : AITag[] = []
+  tagDIReport : DITag[] = []
 
   analogInputs!: AITag[]
   digitalInputs!: DITag[]
@@ -33,6 +40,7 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('confirmationModal', { static: false }) confirmationModal!: ElementRef;
  
   newTag!: FormGroup;
+  private sortDirections: { [key: string]: boolean } = {};
 
   constructor(private elRef: ElementRef, private tagService : TagService, private reportService : ReportService) {} 
 
@@ -298,43 +306,58 @@ saveValue(tag:Tag, type : string): void {
 
 
 
-  getAlarmsPeriod(){
+  getAlarmsPeriod(from: string, to: string){
     var period : Period ={
-      from : new Date,
-      to : new Date,
+      from : from,
+      to : to,
     }
     this.reportService.getAlarmPeriod(period).subscribe(response => {
       console.log('Successfully', response);
+
+      this.alarmReport = response;
+      this.tagAIReport = []
+      this.tagDIReport = []
+      this.tagReport = []
     }, error => {
       console.error('Error:', error);
     });
   }
 
-  getAlarmsPriority(){
-    var priority = 2;
-    this.reportService.getAlarmPriority(priority).subscribe(response => {
+  getAlarmsPriority(p : string){
+    this.reportService.getAlarmPriority(p).subscribe(response => {
       console.log('Successfully', response);
+      this.alarmReport = response;
+      this.tagAIReport = []
+      this.tagDIReport = []
+      this.tagReport = []
     }, error => {
       console.error('Error:', error);
     });
   }
 
-  getTagsPeriod(){
+  getTagsPeriod(from : string, to : string){
     var period : Period ={
-      from : new Date,
-      to : new Date,
+      from : from,
+      to : to ,
     }
     this.reportService.getAllValuesByPeriod(period).subscribe(response => {
       console.log('Successfully', response);
+      this.alarmReport = [];
+      this.tagAIReport = []
+      this.tagDIReport = []
+      this.tagReport = response
     }, error => {
       console.error('Error:', error);
     });
   }
 
-  getTagsId(){
-    var tagId = 'DI1'
+  getTagsId(tagId : string){
     this.reportService.getAllValuesByTagId(tagId).subscribe(response => {
       console.log('Successfully', response);
+      this.alarmReport = [];
+      this.tagAIReport = []
+      this.tagDIReport = []
+      this.tagReport = response
     }, error => {
       console.error('Error:', error);
     });
@@ -344,18 +367,124 @@ saveValue(tag:Tag, type : string): void {
   getTagsAI(){
     this.reportService.getLastAIValues().subscribe(response => {
       console.log('Successfully', response);
+      this.alarmReport = [];
+      this.tagAIReport = response
+      this.tagDIReport = []
+      this.tagReport = []
     }, error => {
       console.error('Error:', error);
     });
   }
 
   getTagsDI(){
-    var tagId = 'DI1'
     this.reportService.getLastDIValues().subscribe(response => {
       console.log('Successfully', response);
+      this.alarmReport = [];
+      this.tagAIReport = []
+      this.tagDIReport = response
+      this.tagReport = []
     }, error => {
       console.error('Error:', error);
     });
+  }
+
+  showReport( chosen : number){
+    this.report = chosen;
+    this.alarmReport = [];
+    // this.tagAIReport = []
+    // this.tagDIReport = []
+  
+    if (chosen == 5){
+
+      this.getTagsDI()
+    }
+    if (chosen == 6){
+
+      this.getTagsAI()
+
+    }
+
+  }
+
+  sortColumn(sortBy: string, list: any[]) {
+    if (!list || list.length <= 1) {
+      // No sorting needed for an empty or single-item list
+      return;
+    }
+  
+    // Determine the current sort direction for the clicked column
+    const isAscending = this.isAscending(sortBy);
+  
+    switch (sortBy) {
+      case 'id':
+        // Sort by the 'id' column
+        list.sort((a, b) => {
+          // Replace 'id' with the actual property you want to sort by
+          const aValue = a.id;
+          const bValue = b.id;
+          return isAscending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        });
+        break;
+      case 'value':
+        // Sort by the 'value' column
+        list.sort((a, b) => {
+          // Replace 'value' with the actual property you want to sort by
+          const aValue = a.value;
+          const bValue = b.value;
+          return isAscending ? aValue - bValue : bValue - aValue;
+        });
+        break;
+        case 'limit':
+          // Sort by the 'value' column
+          list.sort((a, b) => {
+            // Replace 'value' with the actual property you want to sort by
+            const aValue = a.limit;
+            const bValue = b.limit;
+            return isAscending ? aValue - bValue : bValue - aValue;
+          });
+          break;
+          case 'priority':
+            // Sort by the 'value' column
+            list.sort((a, b) => {
+              // Replace 'value' with the actual property you want to sort by
+              const aValue = a.priority;
+              const bValue = b.priority;
+              return isAscending ? aValue - bValue : bValue - aValue;
+            });
+            break;
+      case 'time':
+        // Sort by the 'time' column
+        list.sort((a, b) => {
+          // Replace 'time' with the actual property you want to sort by (e.g., timestamp)
+          const aValue = new Date(a.scanTime).getTime();
+          const bValue = new Date(b.scanTime).getTime();
+          return isAscending ? aValue - bValue : bValue - aValue;
+        });
+        break;
+        case 'time2':
+          // Sort by the 'time' column
+          list.sort((a, b) => {
+            // Replace 'time' with the actual property you want to sort by (e.g., timestamp)
+            const aValue = new Date(a.timeStamp).getTime();
+            const bValue = new Date(b.timeStamp).getTime();
+            return isAscending ? aValue - bValue : bValue - aValue;
+          });
+          break;
+
+      default:
+        // Handle an unsupported sortBy value or don't do anything
+        break;
+    }
+  }
+  
+  private isAscending(sortBy: string): boolean {
+    // Track the current sort direction for each column
+    if (this.sortDirections[sortBy] === undefined) {
+      this.sortDirections[sortBy] = true; // Default to ascending for the first click
+    } else {
+      this.sortDirections[sortBy] = !this.sortDirections[sortBy]; // Toggle between ascending and descending
+    }
+    return this.sortDirections[sortBy];
   }
 
 }

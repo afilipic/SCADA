@@ -40,3 +40,9 @@ export interface AITag extends Tag{
 export enum DriverType{
     RTU, SIMULATION
 }
+
+export interface TagLog{
+    tagId : string,
+    timeStamp : Date,
+    value : number
+}

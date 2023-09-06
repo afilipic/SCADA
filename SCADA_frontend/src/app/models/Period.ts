@@ -1,4 +1,4 @@
 export interface Period{
-    from: Date;
-    to: Date;
+    from: string;
+    to: string;
 }
